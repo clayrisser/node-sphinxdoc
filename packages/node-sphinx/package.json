@@ -1,0 +1,76 @@
+{
+  "name": "node-sphinx",
+  "version": "0.0.1",
+  "description": "document node project with sphinx",
+  "keywords": [
+    "node-sphinx",
+    "sphinx",
+    "python",
+    "doc",
+    "docs",
+    "documentation",
+    "jsdoc",
+    "generate",
+    "generator"
+  ],
+  "homepage": "https://github.com/codejamninja/node-sphinx",
+  "bugs": {
+    "url": "https://github.com/codejamninja/node-sphinx/issues",
+    "email": "jam@codejam.ninja"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Jam Risser",
+    "email": "jam@codejam.ninja",
+    "url": "https://codejam.ninja"
+  },
+  "files": [
+    "lib",
+    "bin"
+  ],
+  "main": "lib/index.js",
+  "bin": {
+    "node-sphinx": "bin/node-sphinx.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codejamninja/node-sphinx"
+  },
+  "scripts": {
+    "build": "babel src -d lib",
+    "clean": "git clean -fXd -e \\!node_modules -e \\!node_modules/**/*",
+    "lint": "npm run format && eslint ./",
+    "lint:fix": "npm run format && eslint --fix ./",
+    "format": "prettier --write ./src/**/*.js",
+    "prepublish": "npm run clean && npm run build",
+    "start": "babel-node src/bin"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.0.0",
+    "commander": "^2.19.0",
+    "deasync": "^0.1.14",
+    "err": "^2.1.10",
+    "lodash": "^4.17.11",
+    "ora": "^3.0.0",
+    "winston": "^3.1.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/node": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^9.0.0",
+    "babel-preset-everything": "^0.1.2",
+    "eslint": "^5.5.0",
+    "eslint-config-jam": "^0.1.2",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.1"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "eslintIgnore": [
+    "lib"
+  ]
+}
