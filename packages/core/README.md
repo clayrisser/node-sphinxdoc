@@ -1,4 +1,4 @@
-# @sphinxdoc/cli
+# @sphinxdoc/core
 
 [![GitHub stars](https://img.shields.io/github/stars/codejamninja/sphinxdoc.svg?style=social&label=Stars)](https://github.com/codejamninja/sphinxdoc)
 
@@ -17,7 +17,7 @@ Please ★ this repo if you found it useful ★ ★ ★
 ## Installation
 
 ```sh
-npm install --save @sphinxdoc/cli
+npm install --save @sphinxdoc/core
 ```
 
 

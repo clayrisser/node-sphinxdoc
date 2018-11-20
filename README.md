@@ -17,7 +17,7 @@ Please ★ this repo if you found it useful ★ ★ ★
 ## Installation
 
 ```sh
-npm install --save sphinxdoc
+npm install --save @sphinxdoc/cli
 ```
 
 
