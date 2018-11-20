@@ -1,9 +1,9 @@
 {
-  "name": "node-sphinx",
+  "name": "@sphinxdoc/cli",
   "version": "0.0.1",
   "description": "document node project with sphinx",
   "keywords": [
-    "node-sphinx",
+    "sphinxdoc",
     "sphinx",
     "python",
     "doc",
@@ -13,9 +13,9 @@
     "generate",
     "generator"
   ],
-  "homepage": "https://github.com/codejamninja/node-sphinx",
+  "homepage": "https://github.com/codejamninja/sphinxdoc",
   "bugs": {
-    "url": "https://github.com/codejamninja/node-sphinx/issues",
+    "url": "https://github.com/codejamninja/sphinxdoc/issues",
     "email": "jam@codejam.ninja"
   },
   "license": "MIT",
@@ -30,11 +30,11 @@
   ],
   "main": "lib/index.js",
   "bin": {
-    "node-sphinx": "bin/node-sphinx.js"
+    "sphinxdoc": "bin/bin.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/codejamninja/node-sphinx"
+    "url": "https://github.com/codejamninja/sphinxdoc"
   },
   "scripts": {
     "build": "babel src -d lib",
@@ -52,6 +52,7 @@
     "err": "^2.1.10",
     "lodash": "^4.17.11",
     "ora": "^3.0.0",
+    "python-env": "^0.2.6",
     "winston": "^3.1.0"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
-# node-sphinx
+# sphinxdoc
 
-[![GitHub stars](https://img.shields.io/github/stars/codejamninja/node-sphinx.svg?style=social&label=Stars)](https://github.com/codejamninja/node-sphinx)
+[![GitHub stars](https://img.shields.io/github/stars/codejamninja/sphinxdoc.svg?style=social&label=Stars)](https://github.com/codejamninja/sphinxdoc)
 
 > document node project with sphinx
 
@@ -17,7 +17,7 @@ Please ★ this repo if you found it useful ★ ★ ★
 ## Installation
 
 ```sh
-npm install --save node-sphinx
+npm install --save sphinxdoc
 ```
 
 
@@ -29,34 +29,34 @@ npm install --save node-sphinx
 
 ## Usage
 
-[Contribute](https://github.com/codejamninja/node-sphinx/blob/master/CONTRIBUTING.md) usage docs
+[Contribute](https://github.com/codejamninja/sphinxdoc/blob/master/CONTRIBUTING.md) usage docs
 
 
 ## Support
 
-Submit an [issue](https://github.com/codejamninja/node-sphinx/issues/new)
+Submit an [issue](https://github.com/codejamninja/sphinxdoc/issues/new)
 
 
 ## Screenshots
 
-[Contribute](https://github.com/codejamninja/node-sphinx/blob/master/CONTRIBUTING.md) a screenshot
+[Contribute](https://github.com/codejamninja/sphinxdoc/blob/master/CONTRIBUTING.md) a screenshot
 
 
 ## Contributing
 
-Review the [guidelines for contributing](https://github.com/codejamninja/node-sphinx/blob/master/CONTRIBUTING.md)
+Review the [guidelines for contributing](https://github.com/codejamninja/sphinxdoc/blob/master/CONTRIBUTING.md)
 
 
 ## License
 
-[MIT License](https://github.com/codejamninja/node-sphinx/blob/master/LICENSE)
+[MIT License](https://github.com/codejamninja/sphinxdoc/blob/master/LICENSE)
 
 [Jam Risser](https://codejam.ninja) © 2018
 
 
 ## Changelog
 
-Review the [changelog](https://github.com/codejamninja/node-sphinx/blob/master/CHANGELOG.md)
+Review the [changelog](https://github.com/codejamninja/sphinxdoc/blob/master/CHANGELOG.md)
 
 
 ## Credits
