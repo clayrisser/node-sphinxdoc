@@ -4,26 +4,44 @@ import pkgDir from 'pkg-dir';
 import { python, pip } from 'python-env';
 
 export default class Sphinx {
-  constructor({ platform }) {
+  constructor({ platform, docsPath = 'docs' }) {
     this.platform = platform;
-    this.paths = {
-      platform: pkgDir.sync(require.resolve(this.platform))
-    };
-    this.paths.docs = path.resolve(this.paths.platform, 'docs');
-    this.paths.environment = path.resolve(this.paths.platform, 'environment');
-    this.paths.requiremnts = path.resolve(
-      this.paths.environment,
-      'requiremnts.txt'
+    this._docsPath = docsPath;
+  }
+
+  get paths() {
+    if (this._paths) return this._paths;
+    const projectPath = pkgDir.sync(process.cwd());
+    const platformPath = pkgDir.sync(
+      require.resolve(this.platform, {
+        paths: [path.resolve(projectPath, 'node_modules')]
+      })
     );
+    const workingPath = path.resolve(projectPath, '.tmp/sphinx');
+    this._paths = {
+      docs: path.resolve(projectPath, this._docsPath),
+      platform: platformPath,
+      project: projectPath,
+      working: workingPath
+    };
+    return this._paths;
   }
 
   async init() {
+    const { paths } = this;
     await this.loadEnvironment();
-    await pip(['install', '-r', this.paths.requirements]);
+    await pip([
+      'install',
+      '-r',
+      path.resolve(paths.working, 'requirements.txt')
+    ]);
     await python('--version');
   }
 
   async loadEnvironment() {
-    fs.copySync(this.paths.docs, this.paths.environment);
+    const { paths } = this;
+    fs.mkdirsSync(paths.working);
+    fs.copySync(path.resolve(paths.platform, 'docs'), paths.working);
+    if (fs.existsSync(paths.docs)) fs.copySync(paths.docs, paths.working);
   }
 }

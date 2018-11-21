@@ -1,5 +1,5 @@
 export default {
   platforms: {
-    rtd: '@sphinxdoc/core'
+    rtd: '@sphinxdoc/rtd'
   }
 };
