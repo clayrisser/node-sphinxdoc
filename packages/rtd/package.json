@@ -1,5 +1,5 @@
 {
-  "name": "@sphinxdoc/core",
+  "name": "@sphinxdoc/rtd",
   "version": "0.0.1",
   "description": "document node project with sphinx",
   "keywords": [

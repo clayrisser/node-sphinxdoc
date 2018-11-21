@@ -1,1 +1,5 @@
-export default {};
+export default {
+  platforms: {
+    rtd: '@sphinxdoc/core'
+  }
+};

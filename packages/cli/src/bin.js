@@ -1,20 +1,27 @@
 import Err from 'err';
 import _ from 'lodash';
 import commander from 'commander';
-import ora from 'ora';
 import action from './action';
+import config from './config';
 import handleError from './errors';
 
-const spinner = ora();
 let isAction = false;
 
 commander.command('build');
+commander.option('--platform [name]', 'platform name');
 commander.option('-d --debug', 'debug logging');
 commander.option('-v --verbose', 'verbose logging');
 commander.action((cmd, options) => {
   try {
     isAction = true;
-    return action(cmd, sanitizeOptions(options), spinner);
+    config.action = cmd;
+    config.options = sanitizeOptions(options);
+    if (options.platform && !_.isBoolean(options.platform)) {
+      const platformName = options.platform;
+      config.platformName = platformName;
+      config.platform = config.platforms[platformName];
+    }
+    return action(config).catch(handleError);
   } catch (err) {
     return handleError(err);
   }
