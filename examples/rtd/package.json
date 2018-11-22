@@ -31,14 +31,14 @@
   },
   "scripts": {
     "build": "babel src -d lib",
+    "build:docs": "sphinxdoc build --platform rtd",
     "clean": "git clean -fXd -e \\!node_modules -e \\!node_modules/**/*",
-    "docs:build": "sphinxdoc build --platform rtd",
-    "docs:start": "sphinxdoc start --platform rtd",
     "format": "prettier --write ./src/**/*.js",
     "lint": "npm run format && eslint ./",
     "lint:fix": "npm run format && eslint --fix ./",
     "prepublish": "npm run clean && npm run build",
-    "start": "babel-node src"
+    "start": "babel-node src",
+    "start:docs": "sphinxdoc start --platform rtd"
   },
   "dependencies": {
     "@sphinxdoc/cli": "^0.0.1",
