@@ -1,13 +1,11 @@
 import Err from 'err';
-import { requireModule } from '../helpers';
 
-export default async function build(config) {
-  const { platform, platformName, output, options } = config;
-  const { port, open } = options;
+export default async function start(config) {
+  const { platform, port, open, output, platformName } = config;
   if (!platformName) throw new Err('platform not specified', 400);
   if (!platform) throw new Err(`invalid platform '${platformName}'`, 400);
-  const Platform = requireModule(platform);
-  const platformModule = new Platform({ platform, output, port, open });
+  const PlatformModule = platform.module;
+  const platformModule = new PlatformModule({ platform, output, port, open });
   await platformModule.install();
   await platformModule.start();
 }

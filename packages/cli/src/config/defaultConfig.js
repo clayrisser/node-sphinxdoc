@@ -1,3 +1,5 @@
 export default {
-  platforms: {}
+  open: false,
+  platforms: {},
+  port: 3000
 };
