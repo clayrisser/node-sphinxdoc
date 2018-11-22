@@ -32,14 +32,14 @@
   },
   "scripts": {
     "build": "babel src -d lib",
-    "build:docs": "sphinxdoc build --platform rtd",
+    "build:docs": "sphinxdoc build",
     "clean": "git clean -fXd -e \\!node_modules -e \\!node_modules/**/*",
     "format": "prettier --write ./src/**/*.js",
     "lint": "npm run format && eslint ./",
     "lint:fix": "npm run format && eslint --fix ./",
     "prepublish": "npm run clean && npm run build",
     "start": "babel-node src",
-    "start:docs": "sphinxdoc start --platform rtd --output html"
+    "start:docs": "sphinxdoc start"
   },
   "dependencies": {
     "@sphinxdoc/cli": "^0.0.4",
@@ -62,5 +62,9 @@
   "eslintIgnore": [
     "lib"
   ],
+  "sphinxdoc": {
+    "platformName": "rtd",
+    "open": true
+  },
   "gitHead": "5c78d3cf7c6b8f97dd99eb49010a1e2f6721d585"
 }

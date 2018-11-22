@@ -1,3 +1,4 @@
+import Err from 'err';
 import fs from 'fs-extra';
 import open from 'open';
 import path from 'path';
@@ -12,15 +13,18 @@ export default class Platform {
   constructor({
     docsPath = 'docs',
     open = false,
-    output = 'html',
+    output,
     platform,
-    port = 3000
+    port = 3000,
+    serve = false
   }) {
+    if (!output) throw new Err('output not defined');
     this._docsPath = docsPath;
     this.open = open;
     this.output = output;
     this.platform = platform;
     this.port = port;
+    this.serve = serve;
   }
 
   get paths() {
@@ -67,21 +71,32 @@ export default class Platform {
   async start() {
     const { paths } = this;
     await this.build();
-    const server = createServer({
-      root: path.resolve(paths.working, 'build', this.output)
-    });
+    const server = this.serve
+      ? createServer({
+          root: path.resolve(paths.working, 'build', this.output)
+        })
+      : null;
     const monitor = await new Promise(resolve => {
-      return createMonitor(paths.project, { ignoreDotFiles: true }, resolve);
+      return createMonitor(
+        paths.project,
+        {
+          ignoreDirectoryPattern: /node_modules/,
+          ignoreDotFiles: true
+        },
+        resolve
+      );
     });
     monitor.on('changed', async () => {
       await this.build();
     });
-    server.server.on('error', handleError);
-    server.listen(this.port, err => {
-      if (err) throw err;
-      log.info(`listening on port ${this.port}`);
-      if (this.open) open(`http://localhost:${this.port}`);
-    });
+    if (this.serve) {
+      server.server.on('error', handleError);
+      server.listen(this.port, err => {
+        if (err) throw err;
+        log.info(`listening on port ${this.port}`);
+        if (this.open) open(`http://localhost:${this.port}`);
+      });
+    }
   }
 
   loadEnvironment() {

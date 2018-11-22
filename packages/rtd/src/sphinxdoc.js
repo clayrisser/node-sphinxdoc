@@ -1,3 +1,6 @@
+import createConfig from './createConfig';
+
 export default {
-  name: 'rtd'
+  name: 'rtd',
+  config: createConfig
 };

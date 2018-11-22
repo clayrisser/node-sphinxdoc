@@ -4,26 +4,37 @@ import rcConfig from 'rc-config';
 import defaultConfig from './defaultConfig';
 import platforms from '../platforms';
 
-export default async function createConfig({ options = {}, action }) {
+export default async function createConfig(
+  { action, options = {}, platform = {} },
+  config = {},
+  passes = 0
+) {
   options = sanitizeOptions(options);
   const userConfig = rcConfig({ name: 'sphinxdoc' });
   const optionsConfig = options.config ? JSON.parse(options.config) : {};
-  let config = mergeConfiguration(defaultConfig, userConfig);
+  if (passes < 2) config = mergeConfiguration(config, defaultConfig);
+  config = mergeConfiguration(config, platform?.config || {});
+  config = mergeConfiguration(config, userConfig);
   config = mergeConfiguration(config, optionsConfig);
   if (options.platform && !_.isBoolean(options.platform)) {
-    const platformName = options.platform;
-    config.platformName = platformName;
-    config.platform = platforms[platformName];
+    config.platformName = options.platform;
   }
-  config.port = Number(options.port || config.port);
-  config.output = options.output || config.output;
+  if (config.platformName) platform = platforms[config.platformName];
   config.open = options.open || config.open;
-  return {
+  config.output = options.output || config.output;
+  config.port = Number(options.port || config.port);
+  config.serve = options.serve || config.serve;
+  config = {
     ...config,
     action,
     options,
+    platform,
     platforms
   };
+  if (passes < 2) {
+    return createConfig({ action, options, platform }, config, ++passes);
+  }
+  return config;
 }
 
 function sanitizeOptions(options) {

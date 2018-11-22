@@ -13,6 +13,7 @@ commander.option('--open', 'open browser');
 commander.option('--output [name]', 'output name');
 commander.option('--platform [name]', 'platform name');
 commander.option('--port [number]', 'port number');
+commander.option('--serve', 'serve docs');
 commander.option('-d --debug', 'debug logging');
 commander.option('-v --verbose', 'verbose logging');
 commander.action((cmd, options) => {
