@@ -1,6 +1,6 @@
 {
   "name": "@sphinxdoc/cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "document node project with sphinx",
   "keywords": [
     "sphinxdoc",
@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
-    "@sphinxdoc/core": "^0.0.1",
+    "@sphinxdoc/core": "^0.0.2",
     "commander": "^2.19.0",
     "deasync": "^0.1.14",
     "err": "^2.1.10",
