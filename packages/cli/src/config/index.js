@@ -1,9 +1,11 @@
 import deasync from 'deasync';
 import createConfig from './createConfig';
 
-const createConfigSync = deasync(async cb => {
-  const config = await createConfig().catch(cb);
-  return cb(null, config);
+const createConfigSync = deasync(async (...args) => {
+  const done = args.pop();
+  const config = await createConfig(...args).catch(done);
+  return done(null, config);
 });
 
-export default createConfigSync();
+export { createConfig, createConfigSync };
+export default { createConfig, createConfigSync };

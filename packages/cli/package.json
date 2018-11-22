@@ -53,7 +53,9 @@
     "deasync": "^0.1.14",
     "err": "^2.1.10",
     "lodash": "^4.17.11",
-    "pkg-dir": "^3.0.0"
+    "merge-configuration": "^0.3.2",
+    "pkg-dir": "^3.0.0",
+    "rc-config": "^0.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
