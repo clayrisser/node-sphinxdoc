@@ -5,8 +5,8 @@ import pkgDir from 'pkg-dir';
 import { createMonitor } from 'watch';
 import { createServer } from 'http-server';
 import { python, pip } from 'python-env';
-import handleError from '../errors';
-import log from '../logger';
+import handleError from './errors';
+import log from './logger';
 
 export default class Sphinx {
   constructor({
@@ -21,7 +21,6 @@ export default class Sphinx {
     this.output = output;
     this.platform = platform;
     this.port = port;
-    this.loadEnvironment();
   }
 
   get paths() {
@@ -54,6 +53,7 @@ export default class Sphinx {
 
   async build() {
     const { paths } = this;
+    this.loadEnvironment();
     await python([
       '-m',
       'sphinx',
@@ -71,14 +71,7 @@ export default class Sphinx {
       root: path.resolve(paths.working, 'build', this.output)
     });
     const monitor = await new Promise(resolve => {
-      return createMonitor(
-        paths.working,
-        {
-          ignoreDotFiles: true,
-          ignoreDirectoryPattern: /build/
-        },
-        resolve
-      );
+      return createMonitor(paths.project, { ignoreDotFiles: true }, resolve);
     });
     monitor.on('changed', async () => {
       await this.build();
@@ -95,6 +88,10 @@ export default class Sphinx {
     const { paths } = this;
     fs.mkdirsSync(paths.working);
     fs.copySync(path.resolve(paths.platform, 'docs'), paths.working);
+    const readmePath = path.resolve(paths.project, 'README.md');
+    if (fs.existsSync(readmePath)) {
+      fs.copySync(readmePath, path.resolve(paths.working, 'index.md'));
+    }
     if (fs.existsSync(paths.docs)) fs.copySync(paths.docs, paths.working);
   }
 }
