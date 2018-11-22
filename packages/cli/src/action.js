@@ -1,7 +1,7 @@
 import Err from 'err';
-import handleError from './errors';
+import { handleError } from '@sphinxdoc/core';
+import { setLevel } from '@sphinxdoc/core/log';
 import { build, start } from './actions';
-import { setLevel } from './logger';
 
 export default async function action(config) {
   const { action, options } = config;

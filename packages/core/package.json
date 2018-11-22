@@ -1,5 +1,5 @@
 {
-  "name": "@sphinxdoc/cli",
+  "name": "@sphinxdoc/core",
   "version": "0.0.1",
   "description": "document node project with sphinx",
   "keywords": [
@@ -26,12 +26,9 @@
   },
   "files": [
     "lib",
-    "bin"
+    "log.js"
   ],
   "main": "lib/index.js",
-  "bin": {
-    "sphinxdoc": "bin/bin.js"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/codejamninja/sphinxdoc"
@@ -47,12 +44,17 @@
     "test": "npm run lint"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.0.0",
-    "@sphinxdoc/core": "^0.0.1",
     "commander": "^2.19.0",
-    "deasync": "^0.1.14",
     "err": "^2.1.10",
-    "lodash": "^4.17.11"
+    "export-es6": "^0.1.0",
+    "fs-extra": "^7.0.1",
+    "http-server": "^0.11.1",
+    "lodash": "^4.17.11",
+    "open": "^0.0.5",
+    "pkg-dir": "^3.0.0",
+    "python-env": "^0.2.6",
+    "watch": "^1.0.2",
+    "winston": "^3.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

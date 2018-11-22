@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import log from './logger';
+import log from './log';
 
 export default function handleError(err) {
   err = sanitizeErr(err);

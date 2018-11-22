@@ -33,15 +33,17 @@
     "url": "https://github.com/codejamninja/sphinxdoc"
   },
   "scripts": {
-    "build": "babel src -d lib",
+    "build": "npm run test && babel src -d lib",
     "clean": "git clean -fXd -e \\!node_modules -e \\!node_modules/**/*",
+    "format": "prettier --write ./src/**/*.js",
     "lint": "npm run format && eslint ./",
     "lint:fix": "npm run format && eslint --fix ./",
-    "format": "prettier --write ./src/**/*.js",
     "prepublish": "npm run clean && npm run build",
-    "start": "babel-node src/bin"
+    "start": "babel-node src/bin",
+    "test": "npm run lint"
   },
   "dependencies": {
+    "@sphinxdoc/core": "^0.0.1",
     "lodash": "^4.17.11"
   },
   "devDependencies": {
@@ -53,9 +55,7 @@
     "babel-eslint": "^9.0.0",
     "babel-preset-everything": "^0.1.2",
     "eslint": "^5.5.0",
-    "eslint-config-jam": "^0.1.2",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-react": "^7.11.1"
+    "eslint-config-jam": "^0.1.2"
   },
   "engines": {
     "node": ">=4.0.0"

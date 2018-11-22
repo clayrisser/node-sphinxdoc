@@ -1,5 +1,3 @@
-export default class Hello {
-  constructor(world) {
-    this.world = world;
-  }
-}
+import { Platform } from '@sphinxdoc/core';
+
+export default class Rtd extends Platform {}

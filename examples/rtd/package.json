@@ -38,7 +38,7 @@
     "lint:fix": "npm run format && eslint --fix ./",
     "prepublish": "npm run clean && npm run build",
     "start": "babel-node src",
-    "start:docs": "sphinxdoc start --platform rtd"
+    "start:docs": "sphinxdoc start --platform rtd --output html"
   },
   "dependencies": {
     "@sphinxdoc/cli": "^0.0.1",
@@ -53,9 +53,7 @@
     "babel-eslint": "^9.0.0",
     "babel-preset-everything": "^0.1.2",
     "eslint": "^5.5.0",
-    "eslint-config-jam": "^0.1.2",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-react": "^7.11.1"
+    "eslint-config-jam": "^0.1.2"
   },
   "engines": {
     "node": ">=6.0.0"

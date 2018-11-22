@@ -5,13 +5,13 @@ import pkgDir from 'pkg-dir';
 import { createMonitor } from 'watch';
 import { createServer } from 'http-server';
 import { python, pip } from 'python-env';
-import handleError from './errors';
-import log from './logger';
+import handleError from './handleError';
+import log from './log';
 
-export default class Sphinx {
+export default class Platform {
   constructor({
     docsPath = 'docs',
-    open = true,
+    open = false,
     output = 'html',
     platform,
     port = 3000
@@ -80,7 +80,7 @@ export default class Sphinx {
     server.listen(this.port, err => {
       if (err) throw err;
       log.info(`listening on port ${this.port}`);
-      open(`http://localhost:${this.port}`);
+      if (this.open) open(`http://localhost:${this.port}`);
     });
   }
 
