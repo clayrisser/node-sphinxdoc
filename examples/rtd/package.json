@@ -1,6 +1,7 @@
 {
   "name": "rtd",
   "version": "0.0.2",
+  "private": true,
   "description": "example using rtd sphinx platform",
   "keywords": [
     "rtd",
@@ -60,5 +61,6 @@
   },
   "eslintIgnore": [
     "lib"
-  ]
+  ],
+  "gitHead": "5c78d3cf7c6b8f97dd99eb49010a1e2f6721d585"
 }
