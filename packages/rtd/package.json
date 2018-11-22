@@ -1,6 +1,6 @@
 {
   "name": "@sphinxdoc/rtd",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "document node project with sphinx",
   "keywords": [
     "sphinxdoc",
@@ -43,7 +43,7 @@
     "test": "npm run lint"
   },
   "dependencies": {
-    "@sphinxdoc/core": "^0.0.2",
+    "@sphinxdoc/core": "^0.0.3",
     "lodash": "^4.17.11"
   },
   "devDependencies": {
