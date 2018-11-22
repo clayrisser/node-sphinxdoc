@@ -7,5 +7,5 @@ export default async function build(config) {
   if (!platform) throw new Err(`invalid platform '${platformName}'`, 400);
   const sphinx = new Sphinx({ platform });
   await sphinx.install();
-  await sphinx.build();
+  await sphinx.start();
 }

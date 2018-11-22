@@ -1,12 +1,27 @@
 import fs from 'fs-extra';
+import open from 'open';
 import path from 'path';
 import pkgDir from 'pkg-dir';
+import { createMonitor } from 'watch';
+import { createServer } from 'http-server';
 import { python, pip } from 'python-env';
+import handleError from '../errors';
+import log from '../logger';
 
 export default class Sphinx {
-  constructor({ platform, docsPath = 'docs' }) {
-    this.platform = platform;
+  constructor({
+    docsPath = 'docs',
+    open = true,
+    output = 'html',
+    platform,
+    port = 3000
+  }) {
     this._docsPath = docsPath;
+    this.open = open;
+    this.output = output;
+    this.platform = platform;
+    this.port = port;
+    this.loadEnvironment();
   }
 
   get paths() {
@@ -27,7 +42,7 @@ export default class Sphinx {
     return this._paths;
   }
 
-  async init() {
+  async install() {
     const { paths } = this;
     await this.loadEnvironment();
     await pip([
@@ -35,10 +50,48 @@ export default class Sphinx {
       '-r',
       path.resolve(paths.working, 'requirements.txt')
     ]);
-    await python('--version');
   }
 
-  async loadEnvironment() {
+  async build() {
+    const { paths } = this;
+    await python([
+      '-m',
+      'sphinx',
+      '-M',
+      this.output,
+      paths.working,
+      path.resolve(paths.working, 'build')
+    ]);
+  }
+
+  async start() {
+    const { paths } = this;
+    await this.build();
+    const server = createServer({
+      root: path.resolve(paths.working, 'build', this.output)
+    });
+    const monitor = await new Promise(resolve => {
+      return createMonitor(
+        paths.working,
+        {
+          ignoreDotFiles: true,
+          ignoreDirectoryPattern: /build/
+        },
+        resolve
+      );
+    });
+    monitor.on('changed', async () => {
+      await this.build();
+    });
+    server.server.on('error', handleError);
+    server.listen(this.port, err => {
+      if (err) throw err;
+      log.info(`listening on port ${this.port}`);
+      open(`http://localhost:${this.port}`);
+    });
+  }
+
+  loadEnvironment() {
     const { paths } = this;
     fs.mkdirsSync(paths.working);
     fs.copySync(path.resolve(paths.platform, 'docs'), paths.working);

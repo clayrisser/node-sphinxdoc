@@ -8,6 +8,7 @@ import handleError from './errors';
 let isAction = false;
 
 commander.command('build');
+commander.command('start');
 commander.option('--platform [name]', 'platform name');
 commander.option('-d --debug', 'debug logging');
 commander.option('-v --verbose', 'verbose logging');

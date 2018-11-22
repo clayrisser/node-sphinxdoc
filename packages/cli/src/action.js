@@ -1,6 +1,6 @@
 import Err from 'err';
 import handleError from './errors';
-import { build } from './actions';
+import { build, start } from './actions';
 import { setLevel } from './logger';
 
 export default async function action(config) {
@@ -10,6 +10,8 @@ export default async function action(config) {
   switch (action) {
     case 'build':
       return build(config);
+    case 'start':
+      return start(config);
   }
   return handleError(new Err(`action '${action}' not found`));
 }
