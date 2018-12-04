@@ -2,7 +2,7 @@
 
 [![GitHub stars](https://img.shields.io/github/stars/codejamninja/sphinxdoc.svg?style=social&label=Stars)](https://github.com/codejamninja/sphinxdoc)
 
-> document node project with sphinx
+> sphinxdoc core
 
 Please ★ this repo if you found it useful ★ ★ ★
 

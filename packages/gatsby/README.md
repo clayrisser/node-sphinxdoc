@@ -1,8 +1,8 @@
-# @sphinxdoc/rtd
+# @sphinxdoc/gatsby
 
 [![GitHub stars](https://img.shields.io/github/stars/codejamninja/sphinxdoc.svg?style=social&label=Stars)](https://github.com/codejamninja/sphinxdoc)
 
-> rtd sphinxdoc platform
+> document node project with sphinx
 
 Please ★ this repo if you found it useful ★ ★ ★
 
@@ -17,7 +17,7 @@ Please ★ this repo if you found it useful ★ ★ ★
 ## Installation
 
 ```sh
-npm install --save @sphinxdoc/rtd
+npm install --save @sphinxdoc/gatsby
 ```
 
 

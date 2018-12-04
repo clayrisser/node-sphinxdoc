@@ -1,62 +1,53 @@
-# @sphinxdoc/rtd
+# gatsby
 
 [![GitHub stars](https://img.shields.io/github/stars/codejamninja/sphinxdoc.svg?style=social&label=Stars)](https://github.com/codejamninja/sphinxdoc)
 
-> rtd sphinxdoc platform
+> example using gatsby sphinxdoc platform
 
 Please ★ this repo if you found it useful ★ ★ ★
 
 
 ## Features
 
-* Compatible with jsdoc
-* Pluggable output
-* Customize doc theme
-
-
-## Installation
-
-```sh
-npm install --save @sphinxdoc/rtd
-```
+* Supports jsdoc
+* Output as read the docs theme
 
 
 ## Dependencies
 
 * [NodeJS](https://nodejs.org)
-* [Python](https://www.python.org)
 
 
 ## Usage
 
-[Contribute](https://github.com/codejamninja/sphinxdoc/blob/master/CONTRIBUTING.md) usage docs
+[Contribute](https://github.com/codejamninja/gatsby/blob/master/CONTRIBUTING.md) usage docs
 
 
 ## Support
 
-Submit an [issue](https://github.com/codejamninja/sphinxdoc/issues/new)
+Submit an [issue](https://github.com/codejamninja/gatsby/issues/new)
 
 
 ## Screenshots
 
-[Contribute](https://github.com/codejamninja/sphinxdoc/blob/master/CONTRIBUTING.md) a screenshot
+[Contribute](https://github.com/codejamninja/gatsby/blob/master/CONTRIBUTING.md) a screenshot
 
 
 ## Contributing
 
-Review the [guidelines for contributing](https://github.com/codejamninja/sphinxdoc/blob/master/CONTRIBUTING.md)
+Review the [guidelines for contributing](https://github.com/codejamninja/gatsby/blob/master/CONTRIBUTING.md)
 
 
 ## License
 
-[MIT License](https://github.com/codejamninja/sphinxdoc/blob/master/LICENSE)
+[MIT License](https://github.com/codejamninja/gatsby/blob/master/LICENSE)
 
 [Jam Risser](https://codejam.ninja) © 2018
 
 
 ## Changelog
 
-Review the [changelog](https://github.com/codejamninja/sphinxdoc/blob/master/CHANGELOG.md)
+Review the [changelog](https://github.com/codejamninja/gatsby/blob/master/CHANGELOG.md)
 
 
 ## Credits

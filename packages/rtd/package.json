@@ -1,7 +1,7 @@
 {
   "name": "@sphinxdoc/rtd",
   "version": "0.1.0",
-  "description": "document node project with sphinx",
+  "description": "rtd sphinxdoc platform",
   "keywords": [
     "sphinxdoc",
     "sphinx",

@@ -2,9 +2,8 @@
   "name": "rtd",
   "version": "0.1.0",
   "private": true,
-  "description": "example using rtd sphinx platform",
+  "description": "example using rtd sphinxdoc platform",
   "keywords": [
-    "rtd",
     "rtd",
     "read-the-docs",
     "sphinx",
@@ -32,14 +31,14 @@
   },
   "scripts": {
     "build": "babel src -d lib",
-    "build:docs": "sphinxdoc build",
     "clean": "git clean -fXd -e \\!node_modules -e \\!node_modules/**/*",
+    "docs:build": "sphinxdoc build",
+    "docs:start": "sphinxdoc start",
     "format": "prettier --write ./src/**/*.js",
     "lint": "npm run format && eslint ./",
     "lint:fix": "npm run format && eslint --fix ./",
     "prepublish": "npm run clean && npm run build",
-    "start": "babel-node src",
-    "start:docs": "sphinxdoc start"
+    "start": "babel-node src"
   },
   "dependencies": {
     "@sphinxdoc/cli": "^0.1.0",

@@ -1,7 +1,7 @@
 {
   "name": "@sphinxdoc/core",
   "version": "0.1.0",
-  "description": "document node project with sphinx",
+  "description": "sphinxdoc core",
   "keywords": [
     "sphinxdoc",
     "sphinx",

@@ -1,21 +1,18 @@
 {
-  "name": "@sphinxdoc/cli",
+  "name": "gatsby",
   "version": "0.1.0",
-  "description": "sphinxdoc cli",
+  "private": true,
+  "description": "example using gatsby sphinxdoc platform",
   "keywords": [
-    "sphinxdoc",
+    "gatsby",
+    "read-the-docs",
     "sphinx",
-    "python",
-    "doc",
-    "docs",
-    "documentation",
-    "jsdoc",
-    "generate",
-    "generator"
+    "example",
+    "jsdoc"
   ],
-  "homepage": "https://github.com/codejamninja/sphinxdoc",
+  "homepage": "https://github.com/codejamninja/gatsby",
   "bugs": {
-    "url": "https://github.com/codejamninja/sphinxdoc/issues",
+    "url": "https://github.com/codejamninja/gatsby/issues",
     "email": "jam@codejam.ninja"
   },
   "license": "MIT",
@@ -25,37 +22,27 @@
     "url": "https://codejam.ninja"
   },
   "files": [
-    "lib",
-    "bin"
+    "lib"
   ],
   "main": "lib/index.js",
-  "bin": {
-    "sphinxdoc": "bin/bin.js"
-  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/codejamninja/sphinxdoc"
+    "url": "https://github.com/codejamninja/gatsby"
   },
   "scripts": {
-    "build": "npm run test && babel src -d lib",
+    "build": "babel src -d lib",
     "clean": "git clean -fXd -e \\!node_modules -e \\!node_modules/**/*",
+    "docs:build": "sphinxdoc build",
+    "docs:start": "sphinxdoc start",
     "format": "prettier --write ./src/**/*.js",
     "lint": "npm run format && eslint ./",
     "lint:fix": "npm run format && eslint --fix ./",
     "prepublish": "npm run clean && npm run build",
-    "start": "babel-node src/bin",
-    "test": "npm run lint"
+    "start": "babel-node src"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.0.0",
-    "@sphinxdoc/core": "^0.1.0",
-    "commander": "^2.19.0",
-    "deasync": "^0.1.14",
-    "err": "^2.1.10",
-    "lodash": "^4.17.11",
-    "merge-configuration": "^0.3.2",
-    "pkg-dir": "^3.0.0",
-    "rc-config": "^0.1.0"
+    "@sphinxdoc/cli": "^0.1.0",
+    "@sphinxdoc/gatsby": "^0.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
@@ -69,10 +56,14 @@
     "eslint-config-jam": "^0.1.2"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=6.0.0"
   },
   "eslintIgnore": [
     "lib"
   ],
+  "sphinxdoc": {
+    "platformName": "gatsby",
+    "open": true
+  },
   "gitHead": "5c78d3cf7c6b8f97dd99eb49010a1e2f6721d585"
 }

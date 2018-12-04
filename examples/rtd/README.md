@@ -1,8 +1,8 @@
 # rtd
 
-[![GitHub stars](https://img.shields.io/github/stars/codejamninja/rtd.svg?style=social&label=Stars)](https://github.com/codejamninja/rtd)
+[![GitHub stars](https://img.shields.io/github/stars/codejamninja/sphinxdoc.svg?style=social&label=Stars)](https://github.com/codejamninja/sphinxdoc)
 
-> example using rtd sphinx platform
+> example using rtd sphinxdoc platform
 
 Please ★ this repo if you found it useful ★ ★ ★
 
