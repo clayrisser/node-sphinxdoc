@@ -23,11 +23,27 @@ export default class Rtd extends Platform {
   }
 
   async build() {
+    // if (this.output !== 'gatsby') return super.build();
     const { paths } = this;
+    const buildPath = path.resolve(paths.working, 'build');
     const distPath = path.resolve(paths.project, 'dist/docs/gatsby');
+    await this.loadEnvironment();
+    await this.python([
+      '-m',
+      'sphinx',
+      '-M',
+      'jekyll',
+      paths.working,
+      buildPath
+    ]);
+    fs.mkdirsSync(distPath);
+    fs.copySync(
+      path.resolve(buildPath, 'jekyll'),
+      path.resolve(this.gatsbyTheme, 'src/pages')
+    );
     await this.gatsby(['build']);
     fs.mkdirsSync(distPath);
-    fs.copySync(path.resolve(this.gatsbyTheme, 'public'), distPath);
+    return fs.copySync(path.resolve(this.gatsbyTheme, 'public'), distPath);
   }
 
   async start() {

@@ -9,5 +9,6 @@
       }
     ],
     "everything"
-  ]
+  ],
+  "plugins": ["babel-plugin-transform-async-super"]
 }

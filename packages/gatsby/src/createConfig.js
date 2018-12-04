@@ -2,6 +2,6 @@ export default function(config) {
   return {
     ...config,
     output: 'html',
-    serve: config.output === 'html'
+    serve: config.output === 'html' || config.output === 'gatsby'
   };
 }

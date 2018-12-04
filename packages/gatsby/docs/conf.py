@@ -7,11 +7,14 @@ author = 'Jam Risser'
 
 copyright = '2018, Jam Risser'
 
-exclude_patterns = []
+exclude_patterns = [
+    'build/*'
+]
 
 extensions = [
     'sphinx.ext.mathjax',
-    'sphinx_js'
+    'sphinx_js',
+    'sphinx_jekyll_builder'
 ]
 
 html_static_path = ['_static']

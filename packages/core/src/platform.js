@@ -45,10 +45,18 @@ export default class Platform {
     return this._paths;
   }
 
+  async pip(...args) {
+    return pip(...args);
+  }
+
+  async python(...args) {
+    return python(...args);
+  }
+
   async install() {
     const { paths } = this;
     await this.loadEnvironment();
-    await pip([
+    await this.pip([
       'install',
       '-r',
       path.resolve(paths.working, 'requirements.txt')
@@ -59,8 +67,15 @@ export default class Platform {
     const { paths } = this;
     const buildPath = path.resolve(paths.working, 'build');
     const distPath = path.resolve(paths.project, 'dist/docs', this.output);
-    this.loadEnvironment();
-    await python(['-m', 'sphinx', '-M', this.output, paths.working, buildPath]);
+    await this.loadEnvironment();
+    await this.python([
+      '-m',
+      'sphinx',
+      '-M',
+      this.output,
+      paths.working,
+      buildPath
+    ]);
     fs.mkdirsSync(distPath);
     fs.copySync(path.resolve(buildPath, this.output), distPath);
   }
@@ -96,7 +111,7 @@ export default class Platform {
     }
   }
 
-  loadEnvironment() {
+  async loadEnvironment() {
     const { paths } = this;
     fs.mkdirsSync(paths.working);
     fs.copySync(path.resolve(paths.platform, 'docs'), paths.working);
