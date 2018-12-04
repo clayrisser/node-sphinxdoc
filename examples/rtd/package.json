@@ -1,6 +1,6 @@
 {
   "name": "rtd",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "example using rtd sphinxdoc platform",
   "keywords": [
@@ -41,8 +41,8 @@
     "start": "babel-node src"
   },
   "dependencies": {
-    "@sphinxdoc/cli": "^0.1.0",
-    "@sphinxdoc/rtd": "^0.1.0"
+    "@sphinxdoc/cli": "^0.1.1",
+    "@sphinxdoc/rtd": "^0.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
