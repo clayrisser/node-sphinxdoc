@@ -57,15 +57,12 @@ export default class Platform {
 
   async build() {
     const { paths } = this;
+    const buildPath = path.resolve(paths.working, 'build');
+    const distPath = path.resolve(paths.project, 'dist/docs', this.output);
     this.loadEnvironment();
-    await python([
-      '-m',
-      'sphinx',
-      '-M',
-      this.output,
-      paths.working,
-      path.resolve(paths.working, 'build')
-    ]);
+    await python(['-m', 'sphinx', '-M', this.output, paths.working, buildPath]);
+    fs.mkdirsSync(distPath);
+    fs.copySync(path.resolve(buildPath, this.output), distPath);
   }
 
   async start() {
