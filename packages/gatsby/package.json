@@ -45,7 +45,12 @@
   },
   "dependencies": {
     "@sphinxdoc/core": "^0.1.0",
-    "lodash": "^4.17.11"
+    "@sphinxdoc/gatsby-theme": "^1.0.0",
+    "cross-spawn": "^6.0.5",
+    "fs-extra": "^7.0.1",
+    "gatsby-cli": "^2.4.6",
+    "lodash": "^4.17.11",
+    "pkg-dir": "^3.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
