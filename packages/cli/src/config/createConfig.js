@@ -1,40 +1,39 @@
+import ConfigLoader from '@ecosystem/config';
+import ModuleLoader from '@ecosystem/module-loader';
 import _ from 'lodash';
-import mergeConfiguration from 'merge-configuration';
-import rcConfig from 'rc-config';
 import defaultConfig from './defaultConfig';
-import platforms from '../platforms';
 
-export default async function createConfig(
-  { action, options = {}, platform = {} },
-  config = {},
-  passes = 0
-) {
+export default function createConfig({ action, options = {} }) {
   options = sanitizeOptions(options);
-  const userConfig = rcConfig({ name: 'sphinxdoc' });
-  const optionsConfig = options.config ? JSON.parse(options.config) : {};
-  if (passes < 2) config = mergeConfiguration(config, defaultConfig);
-  config = mergeConfiguration(config, platform?.config || {});
-  config = mergeConfiguration(config, userConfig);
-  config = mergeConfiguration(config, optionsConfig);
+  const platforms = new ModuleLoader('sphinxdocPlatform', {
+    configPath: 'config',
+    dependsOnPath: 'dependsOn'
+  });
+  const sphinxdoc = new ConfigLoader('sphinxdoc', {
+    defaultConfig,
+    loaders: [platforms],
+    optionsConfig: options.config || '{}',
+    socket: false
+  });
+  const { config } = sphinxdoc;
   if (options.platform && !_.isBoolean(options.platform)) {
     config.platformName = options.platform;
   }
-  if (config.platformName) platform = platforms[config.platformName];
+  if (config.platformName) {
+    config.platform = _.find(platforms.modules, platform => {
+      return !!platform.properties.name;
+    });
+  }
   config.open = options.open || config.open;
   config.output = options.output || config.output;
   config.port = Number(options.port || config.port);
   config.serve = options.serve || config.serve;
-  config = {
+  return {
     ...config,
     action,
     options,
-    platform,
     platforms
   };
-  if (passes < 2) {
-    return createConfig({ action, options, platform }, config, ++passes);
-  }
-  return config;
 }
 
 function sanitizeOptions(options) {

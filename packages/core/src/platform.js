@@ -31,7 +31,7 @@ export default class Platform {
     if (this._paths) return this._paths;
     const projectPath = pkgDir.sync(process.cwd());
     const platformPath = pkgDir.sync(
-      require.resolve(this.platform.moduleName, {
+      require.resolve(this.platform.name, {
         paths: [path.resolve(projectPath, 'node_modules')]
       })
     );

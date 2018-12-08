@@ -48,14 +48,12 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
+    "@ecosystem/config": "^0.2.2",
+    "@ecosystem/module-loader": "^0.2.2",
     "@sphinxdoc/core": "^0.1.1",
     "commander": "^2.19.0",
-    "deasync": "^0.1.14",
     "err": "^2.1.10",
-    "lodash": "^4.17.11",
-    "merge-configuration": "^0.3.2",
-    "pkg-dir": "^3.0.0",
-    "rc-config": "^0.1.0"
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
