@@ -3,6 +3,7 @@ import fs from 'fs-extra';
 import path from 'path';
 import pkgDir from 'pkg-dir';
 import { Platform } from '@sphinxdoc/core';
+import { createMonitor } from 'watch';
 
 export default class Rtd extends Platform {
   constructor(...args) {
@@ -22,7 +23,7 @@ export default class Rtd extends Platform {
     );
   }
 
-  async build() {
+  async build(buildGatsby = true) {
     if (this.output !== 'gatsby' && this.output !== 'html') {
       return super.build();
     }
@@ -43,13 +44,43 @@ export default class Rtd extends Platform {
       path.resolve(buildPath, 'jekyll'),
       path.resolve(this.gatsbyTheme, 'src/pages')
     );
+    if (buildGatsby) await this.buildGatsby();
+    return null;
+  }
+
+  async buildGatsby() {
+    const { paths } = this;
+    const distPath = path.resolve(paths.project, 'dist/docs/gatsby');
     await this.gatsby(['build']);
     fs.mkdirsSync(distPath);
     return fs.copySync(path.resolve(this.gatsbyTheme, 'public'), distPath);
   }
 
   async start() {
-    return this.gatsby(['develop']);
+    const { paths } = this;
+    await this.build(false);
+    const monitor = await new Promise(resolve => {
+      return createMonitor(
+        paths.project,
+        {
+          ignoreDirectoryPattern: /node_modules/,
+          ignoreDotFiles: true
+        },
+        resolve
+      );
+    });
+    monitor.on('changed', async () => {
+      await this.build(false);
+    });
+    if (this.serve) {
+      return this.gatsby([
+        'develop',
+        '-p',
+        this.port,
+        ...(this.open ? ['-o'] : [])
+      ]);
+    }
+    return this.buildGatsby();
   }
 
   async gatsby(args) {
