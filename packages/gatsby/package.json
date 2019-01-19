@@ -1,6 +1,6 @@
 {
   "name": "@sphinxdoc/gatsby",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "gatsby sphinxdoc platform",
   "keywords": [
     "sphinxdoc",
@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "@sphinxdoc/core": "^0.1.3",
-    "@sphinxdoc/gatsby-theme": "^0.1.2",
+    "@sphinxdoc/gatsby-theme": "^0.1.4",
     "cross-spawn": "^6.0.5",
     "fs-extra": "^7.0.1",
     "gatsby-cli": "^2.4.6",
