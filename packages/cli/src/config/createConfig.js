@@ -21,7 +21,7 @@ export default function createConfig({ action, options = {} }) {
   }
   if (config.platformName) {
     config.platform = _.find(platforms.modules, platform => {
-      return !!platform.properties.name;
+      return platform.properties.name === config.platformName;
     });
   }
   config.open = options.open || config.open;

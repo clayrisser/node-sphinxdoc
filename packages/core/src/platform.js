@@ -16,6 +16,7 @@ export default class Platform {
     output,
     platform,
     port = 3000,
+    readme = true,
     serve = false
   }) {
     if (!output) throw new Err('output not defined');
@@ -24,6 +25,7 @@ export default class Platform {
     this.output = output;
     this.platform = platform;
     this.port = port;
+    this.readme = readme;
     this.serve = serve;
   }
 
@@ -35,7 +37,11 @@ export default class Platform {
         paths: [path.resolve(projectPath, 'node_modules')]
       })
     );
-    const workingPath = path.resolve(projectPath, '.tmp/sphinx');
+    const workingPath = path.resolve(
+      projectPath,
+      '.tmp/sphinx',
+      this.platform.properties.name
+    );
     this._paths = {
       docs: path.resolve(projectPath, this._docsPath),
       platform: platformPath,
@@ -114,10 +120,12 @@ export default class Platform {
   async loadEnvironment() {
     const { paths } = this;
     fs.mkdirsSync(paths.working);
-    fs.copySync(path.resolve(paths.platform, 'docs'), paths.working);
-    const readmePath = path.resolve(paths.project, 'README.md');
-    if (fs.existsSync(readmePath)) {
-      fs.copySync(readmePath, path.resolve(paths.working, 'index.md'));
+    fs.copySync(path.resolve(paths.platform, 'archetype'), paths.working);
+    if (this.readme) {
+      const readmePath = path.resolve(paths.project, 'README.md');
+      if (fs.existsSync(readmePath)) {
+        fs.copySync(readmePath, path.resolve(paths.working, 'index.md'));
+      }
     }
     if (fs.existsSync(paths.docs)) fs.copySync(paths.docs, paths.working);
   }

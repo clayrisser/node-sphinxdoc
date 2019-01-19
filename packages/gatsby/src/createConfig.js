@@ -1,7 +1,7 @@
 export default function(config) {
   return {
     ...config,
-    output: 'html',
+    output: 'gatsby',
     serve: config.output === 'html' || config.output === 'gatsby'
   };
 }
