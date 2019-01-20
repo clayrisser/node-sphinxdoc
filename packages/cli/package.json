@@ -1,6 +1,6 @@
 {
   "name": "@sphinxdoc/cli",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "sphinxdoc cli",
   "keywords": [
     "sphinxdoc",
@@ -50,7 +50,7 @@
     "@babel/polyfill": "^7.0.0",
     "@ecosystem/config": "^0.2.8",
     "@ecosystem/module-loader": "^0.2.8",
-    "@sphinxdoc/core": "^0.1.3",
+    "@sphinxdoc/core": "^0.1.5",
     "commander": "^2.19.0",
     "err": "^2.1.10",
     "lodash": "^4.17.11"

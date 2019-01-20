@@ -1,7 +1,7 @@
 {
   "name": "@sphinxdoc/gatsby-theme",
   "description": "Gatsby default starter",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "autobind-decorator": "^2.4.0",
