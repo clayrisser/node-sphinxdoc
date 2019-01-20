@@ -4,9 +4,7 @@ import _ from 'lodash';
 import { graphql } from 'gatsby';
 import HTML from '~/components/HTML';
 import Layout from '~/containers/Layout';
-import Link from '~/components/Link';
 import View from '~/components/View';
-import key from '~/reactUniqueKey';
 
 export default class Home extends Component {
   static propTypes = {
@@ -24,17 +22,11 @@ export default class Home extends Component {
     return this._page;
   }
 
-  renderPosts() {
+  get pages() {
+    if (this._pages) return this._pages;
     const { data } = this.props;
-    const { edges } = data.allMarkdownRemark;
-    return _.map(edges, (edge, i) => {
-      const page = edge.node;
-      return (
-        <View key={key(i)}>
-          <Link to={page.frontmatter.path}>{page.frontmatter.title}</Link>
-        </View>
-      );
-    });
+    this._pages = data.allMarkdownRemark;
+    return this._pages;
   }
 
   renderHome() {
@@ -48,8 +40,7 @@ export default class Home extends Component {
 
   render() {
     return (
-      <Layout page={this.page}>
-        {this.renderPosts()}
+      <Layout pages={this.pages} page={this.page}>
         {this.renderHome()}
       </Layout>
     );
@@ -57,7 +48,7 @@ export default class Home extends Component {
 }
 
 export const pageQuery = graphql`
-  query allPages {
+  query {
     allMarkdownRemark {
       edges {
         node {

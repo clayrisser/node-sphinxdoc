@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import _ from 'lodash';
 import { graphql } from 'gatsby';
-import H1 from '~/components/H1';
-import H2 from '~/components/H2';
 import HTML from '~/components/HTML';
 import Layout from '~/containers/Layout';
 import View from '~/components/View';
@@ -19,13 +18,18 @@ export default class Page extends Component {
     return this._page;
   }
 
+  get pages() {
+    if (this._pages) return this._pages;
+    const { data } = this.props;
+    this._pages = data.allMarkdownRemark;
+    return this._pages;
+  }
+
   render() {
     if (!this.page) return <View />;
-    const { frontmatter, html } = this.page;
+    const { html } = this.page;
     return (
-      <Layout page={this.page}>
-        <H1>{frontmatter.title}</H1>
-        <H2>{frontmatter.date}</H2>
+      <Layout pages={this.pages} page={this.page}>
         <HTML>{html}</HTML>
       </Layout>
     );
@@ -40,6 +44,18 @@ export const pageQuery = graphql`
         date(formatString: "MMMM DD, YYYY")
         path
         title
+      }
+    }
+    allMarkdownRemark {
+      edges {
+        node {
+          html
+          frontmatter {
+            date(formatString: "MMMM DD, YYYY")
+            path
+            title
+          }
+        }
       }
     }
   }

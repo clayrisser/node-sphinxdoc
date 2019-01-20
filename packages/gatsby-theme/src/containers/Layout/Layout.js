@@ -9,7 +9,8 @@ import Sidebar from '../Sidebar';
 
 export default class Layout extends Component {
   static propTypes = {
-    page: PropTypes.object.isRequired
+    page: PropTypes.object.isRequired,
+    pages: PropTypes.object.isRequired
   };
 
   render() {
@@ -20,7 +21,11 @@ export default class Layout extends Component {
         <Grid fluid>
           <Row>
             <Col>
-              <Sidebar html={html || ''} />
+              <Sidebar
+                pages={this.props.pages}
+                page={this.props.page}
+                html={html || ''}
+              />
             </Col>
             <Col>
               <View {...this.props} />

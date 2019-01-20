@@ -10,4 +10,6 @@ export default styled(
   withTheme(props => {
     return <Accordion {...props} />;
   })
-)``;
+)`
+  width: 100%;
+`;

@@ -24,4 +24,8 @@ class StyledLayout extends Component {
   }
 }
 
-export default styled(withTheme(StyledLayout))``;
+export default styled(withTheme(StyledLayout))`
+  padding-top: 40px;
+  padding-left: 40px;
+  padding-right: 40px;
+`;

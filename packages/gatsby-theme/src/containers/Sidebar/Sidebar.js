@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import _ from 'lodash';
 import cheerio from 'cheerio';
+import { graphql } from 'gatsby';
 import Accordion, { AccordionItem } from '~/components/Accordion';
 import Link from '~/components/Link';
 import View from '~/components/View';
@@ -10,15 +11,15 @@ import H3 from '~/components/H3';
 
 export default class Sidebar extends Component {
   static propTypes = {
-    html: PropTypes.string
+    page: PropTypes.object.isRequired,
+    pages: PropTypes.object.isRequired
   };
 
-  static defaultProps = {
-    html: '<h2>I</h2><h4>A</h3><h4>B</h3><h2>II</h2><h3>1</h3><h3>2</h3>'
-  };
+  /* static defaultProps = {
+   *   html: '<h2>I</h2><h4>A</h3><h4>B</h3><h2>II</h2><h3>1</h3><h3>2</h3>'
+   * }; */
 
-  get headerTree() {
-    if (this._headerTree) return this._headerTree;
+  getHeaderTree(html) {
     const headerTree = [];
     function updateHeaderTree(level, label) {
       function setHeader(subTree = [], currentLevel = 0) {
@@ -40,7 +41,7 @@ export default class Sidebar extends Component {
       setHeader(headerTree);
       return headerTree;
     }
-    const $ = cheerio.load(this.props.html);
+    const $ = cheerio.load(html);
     _.each($(':header'), element => {
       const label = $(element).text();
       if (
@@ -51,12 +52,11 @@ export default class Sidebar extends Component {
         updateHeaderTree(Number(element.name[1]) - 1, label);
       }
     });
-    this._headerTree = headerTree;
-    return this._headerTree;
+    return headerTree;
   }
 
-  get headers() {
-    if (this._headers) return this._headers;
+  getHeaders(html) {
+    const headerTree = this.getHeaderTree(html);
     function getHeaders(subTree) {
       if (!subTree.length) return [];
       if (!subTree[0].label) {
@@ -72,16 +72,19 @@ export default class Sidebar extends Component {
       });
       return headers;
     }
-
-    this._headers = getHeaders(this.headerTree);
-    return this._headers;
+    return getHeaders(headerTree);
   }
 
-  renderSubHeaders(subHeaders) {
+  renderSubHeaders(rootPath, subHeaders) {
     return _.map(subHeaders, (subHeader, i) => {
       return (
         <H3 key={key(i)}>
-          <Link to={`#${_.snakeCase(subHeader.label).replace(/_/g, '-')}`}>
+          <Link
+            to={`${rootPath}#${_.snakeCase(subHeader.label).replace(
+              /_/g,
+              '-'
+            )}`}
+          >
             {subHeader.label}
           </Link>
         </H3>
@@ -90,10 +93,21 @@ export default class Sidebar extends Component {
   }
 
   renderHeaders() {
-    return _.map(this.headers, (header, i) => {
+    return _.map(this.props.pages.edges, (page, i) => {
+      const headers = this.getHeaders(page.node.html);
       return (
-        <AccordionItem key={key(i)} title={header.label}>
-          {this.renderSubHeaders(header.children)}
+        <AccordionItem
+          open={page.node.frontmatter.path === this.props.page.frontmatter.path}
+          key={key(i)}
+          title={page.node.frontmatter.title}
+        >
+          {this.renderSubHeaders(
+            page.node.frontmatter.path,
+            _.find(
+              headers,
+              header => header.label === page.node.frontmatter.title
+            ).children
+          )}
         </AccordionItem>
       );
     });
@@ -107,3 +121,20 @@ export default class Sidebar extends Component {
     );
   }
 }
+
+export const query = graphql`
+  query {
+    allMarkdownRemark {
+      edges {
+        node {
+          html
+          frontmatter {
+            date(formatString: "MMMM DD, YYYY")
+            path
+            title
+          }
+        }
+      }
+    }
+  }
+`;
