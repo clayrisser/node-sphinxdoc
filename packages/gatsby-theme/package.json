@@ -8,6 +8,8 @@
     "carbon-components": "^9.68.2",
     "carbon-components-react": "^6.77.0",
     "carbon-icons": "^7.0.7",
+    "classnames": "^2.2.6",
+    "esm": "^3.1.1",
     "gatsby": "^2.0.53",
     "gatsby-image": "^2.0.20",
     "gatsby-plugin-manifest": "^2.0.9",

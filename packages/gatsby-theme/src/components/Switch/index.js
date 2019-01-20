@@ -5,7 +5,11 @@ import Switch from './Switch';
 
 class StyledSwitch extends Component {
   static propTypes = {
-    style: PropTypes.object.isRequired
+    style: PropTypes.object
+  };
+
+  static defaultProps = {
+    style: {}
   };
 
   get style() {

@@ -2,28 +2,26 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import Button from '~/components/Button';
+import Layout from '~/containers/Layout';
+import HTML from '~/components/HTML';
+import H1 from '~/components/H1';
+import H2 from '~/components/H2';
 
-export default class BlogTemplate extends Component {
+export default class Page extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired
   };
 
   render() {
     const { data } = this.props;
-    const { markdownRemark } = data;
-    const { frontmatter, html } = markdownRemark;
+    const { frontmatter, html } = data.markdownRemark;
     return (
-      <div className="blog-post-container">
-        <div className="blog-post">
-          <h1>{frontmatter.title}</h1>
-          <h2>{frontmatter.date}</h2>
-          <Button>hi</Button>
-          <div
-            className="blog-post-content"
-            dangerouslySetInnerHTML={{ __html: html }}
-          />
-        </div>
-      </div>
+      <Layout>
+        <H1>{frontmatter.title}</H1>
+        <H2>{frontmatter.date}</H2>
+        <Button>hi</Button>
+        <HTML>{html}</HTML>
+      </Layout>
     );
   }
 }

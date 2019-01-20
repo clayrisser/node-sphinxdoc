@@ -4,6 +4,7 @@
     "import/no-unresolved": "off",
     "import/no-webpack-loader-syntax": "off",
     "react/no-danger": "off",
+    "react/prop-types": ["error", { "ignore": ["element"] }],
     "import/no-extraneous-dependencies": [
       "error",
       {

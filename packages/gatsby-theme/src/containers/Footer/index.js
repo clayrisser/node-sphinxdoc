@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { Component } from 'react';
 import styled, { withTheme } from 'styled-components';
-import Slider from './Slider';
+import Footer from './Footer';
 
-class StyledSlider extends React.Component {
+class StyledFooter extends Component {
   static propTypes = {
     style: PropTypes.object
   };
@@ -20,8 +20,8 @@ class StyledSlider extends React.Component {
 
   render() {
     const props = { ...this.props };
-    return <Slider {...props} style={this.style} />;
+    return <Footer {...props} style={this.style} />;
   }
 }
 
-export default styled(withTheme(StyledSlider))``;
+export default styled(withTheme(StyledFooter))``;

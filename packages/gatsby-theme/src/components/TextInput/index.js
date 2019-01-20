@@ -5,7 +5,11 @@ import TextInput from './TextInput';
 
 class StyledTextInput extends Component {
   static propTypes = {
-    style: PropTypes.object.isRequired
+    style: PropTypes.object
+  };
+
+  static defaultProps = {
+    style: {}
   };
 
   get style() {

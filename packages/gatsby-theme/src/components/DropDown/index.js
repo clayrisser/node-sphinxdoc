@@ -5,7 +5,11 @@ import DropDown from './DropDown';
 
 class StyledDropDown extends Component {
   static propTypes = {
-    style: PropTypes.object.isRequired
+    style: PropTypes.object
+  };
+
+  static defaultProps = {
+    style: {}
   };
 
   get style() {

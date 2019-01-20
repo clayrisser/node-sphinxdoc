@@ -5,7 +5,11 @@ import RadioButton from './RadioButton';
 
 class StyledRadioButton extends React.Component {
   static propTypes = {
-    style: PropTypes.object.isRequired
+    style: PropTypes.object
+  };
+
+  static defaultProps = {
+    style: {}
   };
 
   get style() {
