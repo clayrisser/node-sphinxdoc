@@ -17,6 +17,7 @@ export default class BlogTemplate extends Component {
         <div className="blog-post">
           <h1>{frontmatter.title}</h1>
           <h2>{frontmatter.date}</h2>
+          <Button>hi</Button>
           <div
             className="blog-post-content"
             dangerouslySetInnerHTML={{ __html: html }}

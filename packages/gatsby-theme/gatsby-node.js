@@ -1,4 +1,7 @@
 const path = require('path');
+const pkgDir = require('pkg-dir');
+
+const rootPath = pkgDir.sync(process.cwd());
 
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions;
@@ -32,5 +35,15 @@ exports.createPages = ({ actions, graphql }) => {
       });
     });
     return null;
+  });
+};
+
+exports.onCreateWebpackConfig = ({ actions }) => {
+  actions.setWebpackConfig({
+    resolve: {
+      alias: {
+        '~': path.resolve(rootPath, './src')
+      }
+    }
   });
 };
