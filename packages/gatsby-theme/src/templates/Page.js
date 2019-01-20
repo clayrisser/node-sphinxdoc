@@ -1,22 +1,28 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { graphql } from 'gatsby';
 import Button from '~/components/Button';
-import Layout from '~/containers/Layout';
-import HTML from '~/components/HTML';
 import H1 from '~/components/H1';
 import H2 from '~/components/H2';
+import HTML from '~/components/HTML';
+import Layout from '~/containers/Layout';
 
 export default class Page extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired
   };
 
-  render() {
+  get page() {
+    if (this._page) return this._page;
     const { data } = this.props;
-    const { frontmatter, html } = data.markdownRemark;
+    this._page = data.markdownRemark;
+    return this._page;
+  }
+
+  render() {
+    const { frontmatter, html } = this.page;
     return (
-      <Layout>
+      <Layout page={this.page}>
         <H1>{frontmatter.title}</H1>
         <H2>{frontmatter.date}</H2>
         <Button>hi</Button>

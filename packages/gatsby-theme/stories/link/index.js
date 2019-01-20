@@ -1,11 +1,11 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
-import { Link } from '~/components';
-import View from '../View';
+import Link from '~/components/Link';
+import Layout from '../Layout';
 
 storiesOf('Link', module).add('Default Link', () => (
-  <View>
+  <Layout>
     <Link
       className="some-class"
       href="https://example.com"
@@ -13,5 +13,5 @@ storiesOf('Link', module).add('Default Link', () => (
     >
       Link
     </Link>
-  </View>
+  </Layout>
 ));

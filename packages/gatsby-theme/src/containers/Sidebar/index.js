@@ -1,10 +1,9 @@
 import React from 'react';
 import styled, { withTheme } from 'styled-components';
-import './index.scss';
-import Link from './Link';
+import Sidebar from './Sidebar';
 
 export default styled(
   withTheme(props => {
-    return <Link {...props} />;
+    return <Sidebar {...props} />;
   })
 )``;

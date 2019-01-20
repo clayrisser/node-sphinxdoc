@@ -13,31 +13,38 @@ export default class Home extends Component {
     data: PropTypes.object.isRequired
   };
 
+  get page() {
+    if (this._page) return this._page;
+    const { data } = this.props;
+    const { edges } = data.allMarkdownRemark;
+    this._page = _.find(
+      edges,
+      edge => edge.node?.frontmatter?.path === '/'
+    ).node;
+    return this._page;
+  }
+
   renderPosts() {
     const { data } = this.props;
     const { edges } = data.allMarkdownRemark;
     return _.map(edges, (edge, i) => {
-      const { node } = edge;
+      const page = edge.node;
       return (
         <View key={key(i)}>
-          <Link to={node.frontmatter.path}>{node.frontmatter.title}</Link>
+          <Link to={page.frontmatter.path}>{page.frontmatter.title}</Link>
         </View>
       );
     });
   }
 
   renderHome() {
-    const { data } = this.props;
-    const { edges } = data.allMarkdownRemark;
-    const edge = _.find(edges, edge => edge.node?.frontmatter?.path === '/');
-    if (!edge) return <View />;
-    const { node } = edge;
-    return <HTML>{node.html}</HTML>;
+    if (!this.page) return <View />;
+    return <HTML>{this.page.html}</HTML>;
   }
 
   render() {
     return (
-      <Layout>
+      <Layout page={this.page}>
         {this.renderPosts()}
         {this.renderHome()}
       </Layout>

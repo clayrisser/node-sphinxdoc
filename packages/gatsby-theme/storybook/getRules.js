@@ -10,7 +10,11 @@ module.exports = function getRules() {
   return [
     {
       test: /\.(s?css|sass)$/,
-      loaders: ['style-loader', 'css-loader']
+      loaders: [
+        require.resolve('style-loader'),
+        require.resolve('css-loader'),
+        require.resolve('sass-loader')
+      ]
     },
     {
       test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],

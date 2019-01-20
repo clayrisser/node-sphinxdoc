@@ -5,9 +5,7 @@ import { Link as GatsbyLink } from 'gatsby';
 
 export default class Link extends Component {
   static propTypes = {
-    children: PropTypes.string.isRequired,
-    className: PropTypes.string.isRequired,
-    to: PropTypes.string.isRequired
+    className: PropTypes.string.isRequired
   };
 
   render() {

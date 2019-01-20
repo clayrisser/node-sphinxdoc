@@ -1,10 +1,9 @@
 import React from 'react';
 import styled, { withTheme } from 'styled-components';
-import './index.scss';
-import Link from './Link';
+import AccordionItem from './AccordionItem';
 
 export default styled(
   withTheme(props => {
-    return <Link {...props} />;
+    return <AccordionItem {...props} />;
   })
 )``;
