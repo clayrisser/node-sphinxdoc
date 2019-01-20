@@ -81,7 +81,9 @@ export default class Sidebar extends Component {
     return _.map(subHeaders, (subHeader, i) => {
       return (
         <H3 key={key(i)}>
-          <Link to="/somthing">{subHeader.label}</Link>
+          <Link to={`#${_.snakeCase(subHeader.label).replace(/_/g, '-')}`}>
+            {subHeader.label}
+          </Link>
         </H3>
       );
     });

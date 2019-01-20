@@ -39,7 +39,11 @@ export default class Home extends Component {
 
   renderHome() {
     if (!this.page) return <View />;
-    return <HTML>{this.page.html}</HTML>;
+    return (
+      <View>
+        <HTML>{this.page.html}</HTML>
+      </View>
+    );
   }
 
   render() {
