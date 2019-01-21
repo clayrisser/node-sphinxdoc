@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import _ from 'lodash';
 import { graphql } from 'gatsby';
 import HTML from '~/components/HTML';
 import Layout from '~/containers/Layout';
@@ -12,21 +11,7 @@ export default class Home extends Component {
   };
 
   get page() {
-    if (this._page) return this._page;
-    const { data } = this.props;
-    const { edges } = data.allMarkdownRemark;
-    this._page = _.find(
-      edges,
-      edge => edge.node?.frontmatter?.path === '/'
-    ).node;
-    return this._page;
-  }
-
-  get pages() {
-    if (this._pages) return this._pages;
-    const { data } = this.props;
-    this._pages = data.allMarkdownRemark;
-    return this._pages;
+    return (this._page = this._page || this.props.data.markdownRemark);
   }
 
   renderHome() {
@@ -49,16 +34,12 @@ export default class Home extends Component {
 
 export const pageQuery = graphql`
   query {
-    allMarkdownRemark {
-      edges {
-        node {
-          html
-          frontmatter {
-            date(formatString: "MMMM DD, YYYY")
-            path
-            title
-          }
-        }
+    markdownRemark(frontmatter: { path: { eq: "/" } }) {
+      html
+      frontmatter {
+        date(formatString: "MMMM DD, YYYY")
+        path
+        title
       }
     }
   }

@@ -2,22 +2,35 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import _ from 'lodash';
 import cheerio from 'cheerio';
-import { graphql } from 'gatsby';
+import { Location } from '@reach/router';
+import { StaticQuery, graphql } from 'gatsby';
 import Accordion, { AccordionItem } from '~/components/Accordion';
-import Link from '~/components/Link';
-import View from '~/components/View';
-import key from '~/reactUniqueKey';
 import H3 from '~/components/H3';
+import Link from '~/components/Link';
+import key from '~/reactUniqueKey';
 
-export default class Sidebar extends Component {
+class Sidebar extends Component {
   static propTypes = {
-    page: PropTypes.object.isRequired,
-    pages: PropTypes.object.isRequired
+    data: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired
   };
 
-  /* static defaultProps = {
-   *   html: '<h2>I</h2><h4>A</h3><h4>B</h3><h2>II</h2><h3>1</h3><h3>2</h3>'
-   * }; */
+  get pages() {
+    if (this._pages) return this._pages;
+    this._pages = _.map(
+      this.props.data?.allMarkdownRemark?.edges || [],
+      'node'
+    );
+    return this._pages;
+  }
+
+  get path() {
+    const { pathname } = this.props.location;
+    if (pathname.length > 1 && pathname[pathname.length - 1] === '/') {
+      return pathname.substr(0, pathname.length - 1);
+    }
+    return pathname;
+  }
 
   getHeaderTree(html) {
     const headerTree = [];
@@ -93,20 +106,18 @@ export default class Sidebar extends Component {
   }
 
   renderHeaders() {
-    return _.map(this.props.pages.edges, (page, i) => {
-      const headers = this.getHeaders(page.node.html);
+    return _.map(_.sortBy(this.pages, 'frontmatter.path'), (page, i) => {
+      const headers = this.getHeaders(page.html);
       return (
         <AccordionItem
-          open={page.node.frontmatter.path === this.props.page.frontmatter.path}
+          open={page.frontmatter.path === this.path}
           key={key(i)}
-          title={page.node.frontmatter.title}
+          title={page.frontmatter.title}
         >
           {this.renderSubHeaders(
-            page.node.frontmatter.path,
-            _.find(
-              headers,
-              header => header.label === page.node.frontmatter.title
-            ).children
+            page.frontmatter.path,
+            _.find(headers, header => header.label === page.frontmatter.title)
+              .children
           )}
         </AccordionItem>
       );
@@ -114,27 +125,31 @@ export default class Sidebar extends Component {
   }
 
   render() {
-    return (
-      <View>
-        <Accordion>{this.renderHeaders()}</Accordion>
-      </View>
-    );
+    return <Accordion>{this.renderHeaders()}</Accordion>;
   }
 }
 
-export const query = graphql`
-  query {
-    allMarkdownRemark {
-      edges {
-        node {
-          html
-          frontmatter {
-            date(formatString: "MMMM DD, YYYY")
-            path
-            title
+export default props => (
+  <StaticQuery
+    query={graphql`
+      query {
+        allMarkdownRemark {
+          edges {
+            node {
+              html
+              frontmatter {
+                path
+                title
+              }
+            }
           }
         }
       }
-    }
-  }
-`;
+    `}
+    render={data => (
+      <Location>
+        {locationProps => <Sidebar data={data} {...locationProps} {...props} />}
+      </Location>
+    )}
+  />
+);
