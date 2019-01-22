@@ -137,6 +137,7 @@ export default props => (
           edges {
             node {
               html
+              tableOfContents(pathToSlugField: "frontmatter.path")
               frontmatter {
                 path
                 title

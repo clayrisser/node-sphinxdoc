@@ -1,12 +1,9 @@
-import './index.scss';
 import React from 'react';
 import styled, { withTheme } from 'styled-components';
-import CodeSnippet from './CodeSnippet';
+import TableRow from './TableRow';
 
 export default styled(
   withTheme(props => {
-    return <CodeSnippet {...props} />;
+    return <TableRow {...props} />;
   })
-)`
-  margin-bottom: 20px;
-`;
+)``;

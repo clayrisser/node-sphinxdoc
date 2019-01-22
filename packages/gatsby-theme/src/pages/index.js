@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { graphql } from 'gatsby';
-import HTML from '~/components/HTML';
 import Layout from '~/containers/Layout';
 import View from '~/components/View';
+import renderAst from '~/renderAst';
 
 export default class Home extends Component {
   static propTypes = {
@@ -16,11 +16,7 @@ export default class Home extends Component {
 
   renderHome() {
     if (!this.page) return <View />;
-    return (
-      <View>
-        <HTML>{this.page.html}</HTML>
-      </View>
-    );
+    return <View>{renderAst(this.page.htmlAst)}</View>;
   }
 
   render() {
@@ -35,7 +31,7 @@ export default class Home extends Component {
 export const pageQuery = graphql`
   query {
     markdownRemark(frontmatter: { path: { eq: "/" } }) {
-      html
+      htmlAst
       frontmatter {
         date(formatString: "MMMM DD, YYYY")
         path
