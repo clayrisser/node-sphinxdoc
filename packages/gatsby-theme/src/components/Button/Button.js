@@ -1,7 +1,7 @@
+import CarbonButton from 'carbon-components-react/es/components/Button';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import autobind from 'autobind-decorator';
-import { Button as CarbonButton } from 'carbon-components-react';
 
 @autobind
 export default class Button extends Component {

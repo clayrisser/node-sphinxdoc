@@ -1,8 +1,13 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import RehypeReact from 'rehype-react';
 import { graphql } from 'gatsby';
-import HTML from '~/components/HTML';
+import CodeSnippet from '~/components/CodeSnippet';
+import H1 from '~/components/H1';
+import H2 from '~/components/H2';
+import H3 from '~/components/H3';
 import Layout from '~/containers/Layout';
+import P from '~/components/P';
 import View from '~/components/View';
 
 export default class Page extends Component {
@@ -16,18 +21,24 @@ export default class Page extends Component {
 
   render() {
     if (!this.page) return <View />;
-    return (
-      <Layout>
-        <HTML>{this.page.html}</HTML>
-      </Layout>
-    );
+    const renderAst = new RehypeReact({
+      createElement: React.createElement,
+      components: {
+        code: CodeSnippet,
+        h1: H1,
+        h2: H2,
+        h3: H3,
+        p: P
+      }
+    }).Compiler;
+    return <Layout>{renderAst(this.page.htmlAst)}</Layout>;
   }
 }
 
 export const pageQuery = graphql`
   query($path: String!) {
     markdownRemark(frontmatter: { path: { eq: $path } }) {
-      html
+      htmlAst
       frontmatter {
         date(formatString: "MMMM DD, YYYY")
         path

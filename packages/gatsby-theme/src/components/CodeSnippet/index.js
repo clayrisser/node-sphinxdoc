@@ -1,10 +1,10 @@
 import './index.scss';
 import React from 'react';
 import styled, { withTheme } from 'styled-components';
-import Button from './Button';
+import CodeSnippet from './CodeSnippet';
 
 export default styled(
   withTheme(props => {
-    return <Button {...props} />;
+    return <CodeSnippet {...props} />;
   })
 )``;
