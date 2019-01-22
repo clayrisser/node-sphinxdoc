@@ -2,9 +2,11 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import _ from 'lodash';
 import cheerio from 'cheerio';
+import { List24 } from '@carbon/icons-react';
 import { Location } from '@reach/router';
 import { StaticQuery, graphql } from 'gatsby';
 import Link from '~/components/Link';
+import View from '~/components/View';
 import {
   SideNav,
   SideNavDetails,
@@ -122,6 +124,7 @@ class Sidebar extends Component {
         <SideNavMenu
           defaultExpanded={page.frontmatter.path === this.path}
           isActive={page.frontmatter.path === this.path}
+          icon={<List24 />}
           key={key(i)}
           title={page.frontmatter.title}
         >
@@ -138,10 +141,12 @@ class Sidebar extends Component {
   render() {
     return (
       <SideNav>
-        <SideNavHeader>
-          <SideNavDetails title={this.title} />
-        </SideNavHeader>
-        {this.renderHeaders()}
+        <View>
+          <SideNavHeader>
+            <SideNavDetails title={this.title} />
+          </SideNavHeader>
+          {this.renderHeaders()}
+        </View>
       </SideNav>
     );
   }

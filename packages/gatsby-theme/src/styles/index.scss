@@ -5,9 +5,14 @@ $feature-flags: (
 @import '~carbon-components/scss/globals/scss/styles.scss';
 
 a.bx--link.anchor {
-  margin-left: -16px;
+  margin-left: -20px;
 }
 
 li.bx--side-nav__item {
   list-style-type: none;
+}
+
+
+.bx--side-nav__navigation {
+  justify-content: space-between;
 }
