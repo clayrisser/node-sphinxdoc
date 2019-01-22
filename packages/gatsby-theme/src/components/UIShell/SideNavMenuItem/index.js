@@ -1,10 +1,9 @@
-import './index.scss';
 import React from 'react';
 import styled, { withTheme } from 'styled-components';
-import SideNav from './SideNav';
+import SideNavMenuItem from './SideNavMenuItem';
 
 export default styled(
   withTheme(props => {
-    return <SideNav {...props} />;
+    return <SideNavMenuItem {...props} />;
   })
 )``;

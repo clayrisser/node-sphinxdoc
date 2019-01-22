@@ -1,9 +1,9 @@
 import React from 'react';
 import styled, { withTheme } from 'styled-components';
-import AccordionItem from './AccordionItem';
+import SideNavDetails from './SideNavDetails';
 
 export default styled(
   withTheme(props => {
-    return <AccordionItem {...props} />;
+    return <SideNavDetails {...props} />;
   })
 )``;

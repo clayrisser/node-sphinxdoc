@@ -1,1 +1,13 @@
+$feature-flags: (
+  components-x: true,
+  ui-shell: true
+);
 @import '~carbon-components/scss/globals/scss/styles.scss';
+
+a.bx--link.anchor {
+  margin-left: -16px;
+}
+
+li.bx--side-nav__item {
+  list-style-type: none;
+}

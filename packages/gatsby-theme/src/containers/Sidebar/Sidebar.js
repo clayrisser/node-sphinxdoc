@@ -4,9 +4,14 @@ import _ from 'lodash';
 import cheerio from 'cheerio';
 import { Location } from '@reach/router';
 import { StaticQuery, graphql } from 'gatsby';
-import Accordion, { AccordionItem } from '~/components/Accordion';
-import H3 from '~/components/H3';
 import Link from '~/components/Link';
+import {
+  SideNav,
+  SideNavDetails,
+  SideNavMenu,
+  SideNavMenuItem,
+  SideNavHeader
+} from '~/components/UIShell';
 import key from '~/reactUniqueKey';
 
 class Sidebar extends Component {
@@ -16,12 +21,9 @@ class Sidebar extends Component {
   };
 
   get pages() {
-    if (this._pages) return this._pages;
-    this._pages = _.map(
-      this.props.data?.allMarkdownRemark?.edges || [],
-      'node'
-    );
-    return this._pages;
+    return (this._pages =
+      this._pages ||
+      _.map(this.props.data?.allMarkdownRemark?.edges || [], 'node'));
   }
 
   get path() {
@@ -30,6 +32,11 @@ class Sidebar extends Component {
       return pathname.substr(0, pathname.length - 1);
     }
     return pathname;
+  }
+
+  get title() {
+    return (this._title =
+      this._title || this.props.data?.site?.siteMetadata?.title || '');
   }
 
   getHeaderTree(html) {
@@ -91,16 +98,19 @@ class Sidebar extends Component {
   renderSubHeaders(rootPath, subHeaders) {
     return _.map(subHeaders, (subHeader, i) => {
       return (
-        <H3 key={key(i)}>
-          <Link
+        <Link
+          to={`${rootPath}#${_.snakeCase(subHeader.label).replace(/_/g, '-')}`}
+        >
+          <SideNavMenuItem
+            key={key(i)}
             to={`${rootPath}#${_.snakeCase(subHeader.label).replace(
               /_/g,
               '-'
             )}`}
           >
             {subHeader.label}
-          </Link>
-        </H3>
+          </SideNavMenuItem>
+        </Link>
       );
     });
   }
@@ -109,8 +119,9 @@ class Sidebar extends Component {
     return _.map(_.sortBy(this.pages, 'frontmatter.path'), (page, i) => {
       const headers = this.getHeaders(page.html);
       return (
-        <AccordionItem
-          open={page.frontmatter.path === this.path}
+        <SideNavMenu
+          defaultExpanded={page.frontmatter.path === this.path}
+          isActive={page.frontmatter.path === this.path}
           key={key(i)}
           title={page.frontmatter.title}
         >
@@ -119,13 +130,20 @@ class Sidebar extends Component {
             _.find(headers, header => header.label === page.frontmatter.title)
               .children
           )}
-        </AccordionItem>
+        </SideNavMenu>
       );
     });
   }
 
   render() {
-    return <Accordion>{this.renderHeaders()}</Accordion>;
+    return (
+      <SideNav>
+        <SideNavHeader>
+          <SideNavDetails title={this.title} />
+        </SideNavHeader>
+        {this.renderHeaders()}
+      </SideNav>
+    );
   }
 }
 
@@ -133,11 +151,15 @@ export default props => (
   <StaticQuery
     query={graphql`
       query {
+        site {
+          siteMetadata {
+            title
+          }
+        }
         allMarkdownRemark {
           edges {
             node {
               html
-              tableOfContents(pathToSlugField: "frontmatter.path")
               frontmatter {
                 path
                 title
