@@ -52,6 +52,7 @@
   ],
   "main": "gatsby-node.js",
   "files": [
+    ".babelrc",
     "gatsby*.js",
     "src"
   ],
