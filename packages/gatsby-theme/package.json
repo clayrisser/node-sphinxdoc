@@ -1,7 +1,7 @@
 {
   "name": "@sphinxdoc/gatsby-theme",
   "description": "Gatsby default starter",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "@carbon/icons-react": "^0.0.1-alpha.30",
