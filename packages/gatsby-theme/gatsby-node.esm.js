@@ -1,5 +1,6 @@
 import path from 'path';
 import pkgDir from 'pkg-dir';
+import config from './src/config';
 
 const rootPath = pkgDir.sync(process.cwd());
 
@@ -35,6 +36,10 @@ export async function createPages({ actions, graphql }) {
 export function onCreateWebpackConfig({ actions }) {
   actions.setWebpackConfig({
     resolve: {
+      modules: [
+        path.resolve(rootPath, 'node_modules'),
+        path.resolve(config.rootPath, 'node_modules')
+      ],
       alias: {
         '~': path.resolve(rootPath, './src')
       }

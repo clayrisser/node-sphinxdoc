@@ -7,20 +7,22 @@ import pkgDir from 'pkg-dir';
 import { Platform } from '@sphinxdoc/core';
 import { createMonitor } from 'watch';
 
+const rootPath = pkgDir.sync(process.cwd());
+
 export default class Rtd extends Platform {
   constructor(...args) {
     super(...args);
     this.gatsbyCli = path.resolve(
       pkgDir.sync(
         require.resolve('gatsby-cli', {
-          paths: path.resolve(pkgDir.sync(process.cwd()), 'node_modules')
+          paths: path.resolve(rootPath, 'node_modules')
         })
       ),
       'lib/index.js'
     );
     this.gatsbyTheme = pkgDir.sync(
       require.resolve('@sphinxdoc/gatsby-theme', {
-        paths: path.resolve(pkgDir.sync(process.cwd()), 'node_modules')
+        paths: path.resolve(rootPath, 'node_modules')
       })
     );
   }
@@ -68,12 +70,14 @@ export default class Rtd extends Platform {
         pkgPath,
         path.resolve(this.gatsbyTheme, 'src', 'package.json')
       );
-      await this.npm('install');
     }
     fs.copySync(
       path.resolve(buildPath, 'jekyll'),
       fs.realpathSync(path.resolve(this.gatsbyTheme, 'src/pages'))
     );
+    fs.writeJsonSync(path.resolve(this.gatsbyTheme, 'src/config.json'), {
+      rootPath
+    });
     if (buildGatsby) await this.buildGatsby();
     return null;
   }
@@ -111,17 +115,6 @@ export default class Rtd extends Platform {
       ]);
     }
     return this.buildGatsby();
-  }
-
-  async npm(args) {
-    return new Promise((resolve, reject) => {
-      const cp = crossSpawn('npm', [...args], {
-        cwd: path.resolve(this.gatsbyTheme, 'src'),
-        stdio: 'inherit'
-      });
-      cp.on('close', resolve);
-      cp.on('error', reject);
-    });
   }
 
   async gatsby(args) {
