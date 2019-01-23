@@ -1,8 +1,8 @@
 import Err from 'err';
 import commander from 'commander';
+import { createConfig } from '@sphinxdoc/core/lib/config';
 import { handleError } from '@sphinxdoc/core';
 import action from './action';
-import { createConfig } from './config';
 
 let isAction = false;
 

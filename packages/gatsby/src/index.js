@@ -75,9 +75,6 @@ export default class Rtd extends Platform {
       path.resolve(buildPath, 'jekyll'),
       fs.realpathSync(path.resolve(this.gatsbyTheme, 'src/pages'))
     );
-    fs.writeJsonSync(path.resolve(this.gatsbyTheme, 'src/config.json'), {
-      rootPath
-    });
     if (buildGatsby) await this.buildGatsby();
     return null;
   }

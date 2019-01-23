@@ -1,7 +1,10 @@
-import ConfigLoader from '@ecosystem/config';
+import ConfigLoader, { socketGetConfig } from '@ecosystem/config';
 import ModuleLoader from '@ecosystem/module-loader';
 import _ from 'lodash';
+import pkgDir from 'pkg-dir';
 import defaultConfig from './defaultConfig';
+
+const rootPath = pkgDir.sync(process.cwd());
 
 export default function createConfig({ action, options = {} }) {
   options = sanitizeOptions(options);
@@ -13,7 +16,7 @@ export default function createConfig({ action, options = {} }) {
     defaultConfig,
     loaders: [platforms],
     optionsConfig: options.config || '{}',
-    socket: false
+    socket: true
   });
   const { config } = sphinxdoc;
   if (options.platform && !_.isBoolean(options.platform)) {
@@ -32,8 +35,14 @@ export default function createConfig({ action, options = {} }) {
     ...config,
     action,
     options,
-    platforms
+    platforms,
+    rootPath
   };
+}
+
+export function rebuildConfig() {
+  const config = socketGetConfig('sphinxdoc');
+  return createConfig({ action: config.action, options: config.options });
 }
 
 function sanitizeOptions(options) {

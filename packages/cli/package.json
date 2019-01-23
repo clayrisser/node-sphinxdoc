@@ -48,8 +48,6 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
-    "@ecosystem/config": "^0.2.8",
-    "@ecosystem/module-loader": "^0.2.8",
     "@sphinxdoc/core": "^0.1.5",
     "commander": "^2.19.0",
     "err": "^2.1.10",
