@@ -22,7 +22,7 @@ export default class Home extends Component {
   render() {
     return (
       <Layout pages={this.pages} page={this.page}>
-        {/* {this.renderHome()} */}
+        {this.renderHome()}
       </Layout>
     );
   }
