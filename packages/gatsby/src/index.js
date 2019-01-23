@@ -1,5 +1,7 @@
+import _ from 'lodash';
 import crossSpawn from 'cross-spawn';
 import fs from 'fs-extra';
+import glob from 'glob';
 import path from 'path';
 import pkgDir from 'pkg-dir';
 import { Platform } from '@sphinxdoc/core';
@@ -44,6 +46,34 @@ export default class Rtd extends Platform {
       path.resolve(buildPath, 'jekyll'),
       path.resolve(this.gatsbyTheme, 'src/pages')
     );
+    await new Promise((resolve, reject) => {
+      glob(`${paths.docs}/**/*.js`, (err, files) => {
+        if (err) return reject(err);
+        _.each(files, file => {
+          const fileName = file.match(/[^/]*$/)?.[0] || '';
+          const subPath = file.substr(
+            paths.docs.length + 1,
+            file.length - paths.docs.length - fileName.length - 2
+          );
+          const dirPath = path.resolve(this.gatsbyTheme, 'src/pages', subPath);
+          if (!fs.existsSync(dirPath)) fs.mkdirsSync(dirPath);
+          fs.copySync(file, path.resolve(dirPath, fileName));
+        });
+        return resolve(files);
+      });
+    });
+    const pkgPath = path.resolve(paths.docs, 'package.json');
+    if (fs.existsSync(pkgPath)) {
+      fs.copySync(
+        pkgPath,
+        path.resolve(this.gatsbyTheme, 'src', 'package.json')
+      );
+      await this.npm('install');
+    }
+    fs.copySync(
+      path.resolve(buildPath, 'jekyll'),
+      fs.realpathSync(path.resolve(this.gatsbyTheme, 'src/pages'))
+    );
     if (buildGatsby) await this.buildGatsby();
     return null;
   }
@@ -81,6 +111,17 @@ export default class Rtd extends Platform {
       ]);
     }
     return this.buildGatsby();
+  }
+
+  async npm(args) {
+    return new Promise((resolve, reject) => {
+      const cp = crossSpawn('npm', [...args], {
+        cwd: path.resolve(this.gatsbyTheme, 'src'),
+        stdio: 'inherit'
+      });
+      cp.on('close', resolve);
+      cp.on('error', reject);
+    });
   }
 
   async gatsby(args) {

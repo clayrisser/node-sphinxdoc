@@ -1,3 +1,6 @@
 {
-  "extends": ["jam/base"]
+  "extends": ["jam/base"],
+  "rules": {
+    "no-empty": "off"
+  }
 }
