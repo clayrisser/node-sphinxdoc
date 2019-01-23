@@ -25,6 +25,7 @@
     "url": "https://codejam.ninja"
   },
   "files": [
+    "archtype",
     "lib"
   ],
   "main": "lib/index.js",
