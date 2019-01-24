@@ -78,8 +78,7 @@ export default class Rtd extends Platform {
       await this.build(false);
     });
     if (this.serve) {
-      return this.gatsby([
-        'develop',
+      return this.gatsby('develop', [
         '-p',
         this.port,
         ...(this.open ? ['-o'] : [])
@@ -88,13 +87,14 @@ export default class Rtd extends Platform {
     return this.buildGatsby();
   }
 
-  async gatsby(args) {
+  async gatsby(command, args) {
     const { options } = this.config;
     return new Promise((resolve, reject) => {
       const cp = crossSpawn(
         'node',
         [
           this.gatsbyCli,
+          command,
           options.debug || options.verbose ? '--verbose' : '',
           ...args
         ],
