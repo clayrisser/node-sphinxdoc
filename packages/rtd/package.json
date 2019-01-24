@@ -1,6 +1,6 @@
 {
   "name": "@sphinxdoc/rtd",
-  "version": "0.1.20",
+  "version": "0.1.21",
   "description": "rtd sphinxdoc platform",
   "keywords": [
     "sphinxdoc",
@@ -45,7 +45,7 @@
     "test": "npm run lint"
   },
   "dependencies": {
-    "@sphinxdoc/core": "^0.1.20",
+    "@sphinxdoc/core": "^0.1.21",
     "lodash": "^4.17.11"
   },
   "devDependencies": {
