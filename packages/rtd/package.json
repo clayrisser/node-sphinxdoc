@@ -45,7 +45,7 @@
     "test": "npm run lint"
   },
   "dependencies": {
-    "@sphinxdoc/core": "^0.1.13",
+    "@sphinxdoc/core": "^0.1.16",
     "lodash": "^4.17.11"
   },
   "devDependencies": {

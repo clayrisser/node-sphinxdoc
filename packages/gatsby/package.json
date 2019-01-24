@@ -45,8 +45,8 @@
     "test": "npm run lint"
   },
   "dependencies": {
-    "@sphinxdoc/core": "^0.1.13",
-    "@sphinxdoc/gatsby-theme": "^0.1.13",
+    "@sphinxdoc/core": "^0.1.16",
+    "@sphinxdoc/gatsby-theme": "^0.1.16",
     "cross-spawn": "^6.0.5",
     "fs-extra": "^7.0.1",
     "gatsby-cli": "^2.4.6",

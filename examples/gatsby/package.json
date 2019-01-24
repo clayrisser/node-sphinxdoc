@@ -1,6 +1,6 @@
 {
   "name": "gatsby",
-  "version": "0.1.14",
+  "version": "0.1.16",
   "private": true,
   "description": "example using gatsby sphinxdoc platform",
   "keywords": [
@@ -41,8 +41,8 @@
     "start": "babel-node src"
   },
   "dependencies": {
-    "@sphinxdoc/cli": "^0.1.13",
-    "@sphinxdoc/gatsby": "^0.1.14"
+    "@sphinxdoc/cli": "^0.1.16",
+    "@sphinxdoc/gatsby": "^0.1.16"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
