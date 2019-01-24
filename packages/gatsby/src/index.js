@@ -1,7 +1,5 @@
-import _ from 'lodash';
 import crossSpawn from 'cross-spawn';
 import fs from 'fs-extra';
-import glob from 'glob';
 import path from 'path';
 import pkgDir from 'pkg-dir';
 import { Platform } from '@sphinxdoc/core';
@@ -34,6 +32,7 @@ export default class Rtd extends Platform {
     const { paths } = this;
     const buildPath = path.resolve(paths.working, 'build');
     const distPath = path.resolve(paths.project, 'dist/docs/gatsby');
+    const gatsbyPath = path.resolve(paths.working, '_gatsby');
     await this.loadEnvironment();
     await this.python([
       '-m',
@@ -44,36 +43,15 @@ export default class Rtd extends Platform {
       buildPath
     ]);
     fs.mkdirsSync(distPath);
-    fs.copySync(
-      path.resolve(buildPath, 'jekyll'),
-      path.resolve(this.gatsbyTheme, 'src/pages')
-    );
-    await new Promise((resolve, reject) => {
-      glob(`${paths.docs}/**/*.js`, (err, files) => {
-        if (err) return reject(err);
-        _.each(files, file => {
-          const fileName = file.match(/[^/]*$/)?.[0] || '';
-          const subPath = file.substr(
-            paths.docs.length + 1,
-            file.length - paths.docs.length - fileName.length - 2
-          );
-          const dirPath = path.resolve(this.gatsbyTheme, 'src/pages', subPath);
-          if (!fs.existsSync(dirPath)) fs.mkdirsSync(dirPath);
-          fs.copySync(file, path.resolve(dirPath, fileName));
-        });
-        return resolve(files);
-      });
+    fs.copySync(this.gatsbyTheme, gatsbyPath, {
+      filter: src => !/\/node_modules/.test(src)
     });
-    const pkgPath = path.resolve(paths.docs, 'package.json');
-    if (fs.existsSync(pkgPath)) {
-      fs.copySync(
-        pkgPath,
-        path.resolve(this.gatsbyTheme, 'src', 'package.json')
-      );
-    }
+    fs.copySync(paths.docs, path.resolve(gatsbyPath, 'src/pages'), {
+      filter: src => /\.js$/.test(src)
+    });
     fs.copySync(
       path.resolve(buildPath, 'jekyll'),
-      fs.realpathSync(path.resolve(this.gatsbyTheme, 'src/pages'))
+      path.resolve(gatsbyPath, 'src/pages')
     );
     if (buildGatsby) await this.buildGatsby();
     return null;
@@ -81,10 +59,11 @@ export default class Rtd extends Platform {
 
   async buildGatsby() {
     const { paths } = this;
+    const gatsbyPath = path.resolve(paths.working, 'gatsby');
     const distPath = path.resolve(paths.project, 'dist/docs/gatsby');
     await this.gatsby(['build']);
     fs.mkdirsSync(distPath);
-    return fs.copySync(path.resolve(this.gatsbyTheme, 'public'), distPath);
+    return fs.copySync(path.resolve(gatsbyPath, 'public'), distPath);
   }
 
   async start() {

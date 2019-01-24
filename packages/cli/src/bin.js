@@ -20,13 +20,13 @@ commander.action((cmd, options) => {
   try {
     isAction = true;
     const config = createConfig({ options, action: cmd });
-    return action(config).catch(handleError);
+    return action(config).catch(err => handleError(err, { kill: true }));
   } catch (err) {
-    return handleError(err);
+    return handleError(err, { kill: true });
   }
 });
 commander.parse(process.argv);
 
 if (!isAction) {
-  handleError(new Err('action not specified', 400));
+  handleError(new Err('action not specified', 400), { kill: true });
 }

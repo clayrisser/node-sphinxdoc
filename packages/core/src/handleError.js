@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import log from './log';
 
-export default function handleError(err) {
+export default function handleError(err, { kill = false }) {
   err = sanitizeErr(err);
   const statusCode = err.code.toString();
   if (statusCode.length && statusCode[0] === '4') {
@@ -9,6 +9,7 @@ export default function handleError(err) {
   } else {
     log.error(err.stack);
   }
+  if (kill) process.exit(err.code);
 }
 
 function sanitizeErr(err) {
