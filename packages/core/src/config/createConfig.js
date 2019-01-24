@@ -16,7 +16,7 @@ export default function createConfig({ action, options = {} }) {
     defaultConfig,
     loaders: [platforms],
     optionsConfig: options.config || '{}',
-    socket: true
+    socket: { silent: false }
   });
   const { config } = sphinxdoc;
   if (options.platform && !_.isBoolean(options.platform)) {
