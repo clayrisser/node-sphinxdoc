@@ -89,11 +89,20 @@ export default class Rtd extends Platform {
   }
 
   async gatsby(args) {
+    const { options } = this.config;
     return new Promise((resolve, reject) => {
-      const cp = crossSpawn('node', [this.gatsbyCli, ...args], {
-        cwd: this.gatsbyTheme,
-        stdio: 'inherit'
-      });
+      const cp = crossSpawn(
+        'node',
+        [
+          this.gatsbyCli,
+          options.debug || options.verbose ? '--verbose' : '',
+          ...args
+        ],
+        {
+          cwd: this.gatsbyTheme,
+          stdio: 'inherit'
+        }
+      );
       cp.on('close', resolve);
       cp.on('error', reject);
     });

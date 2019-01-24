@@ -10,17 +10,21 @@ import handleError from './handleError';
 import log from './log';
 
 export default class Platform {
-  constructor({
-    docsPath = 'docs',
-    open = false,
-    output,
-    platform,
-    port = 3000,
-    readme = true,
-    serve = false
-  }) {
+  constructor(
+    {
+      docsPath = 'docs',
+      open = false,
+      output,
+      platform,
+      port = 3000,
+      readme = true,
+      serve = false
+    },
+    config
+  ) {
     if (!output) throw new Err('output not defined');
     this._docsPath = docsPath;
+    this.config = config;
     this.open = open;
     this.output = output;
     this.platform = platform;
