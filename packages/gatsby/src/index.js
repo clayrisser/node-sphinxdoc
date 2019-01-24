@@ -44,7 +44,7 @@ export default class Rtd extends Platform {
     ]);
     fs.mkdirsSync(distPath);
     fs.copySync(this.gatsbyTheme, gatsbyPath, {
-      filter: src => !/\/node_modules/.test(src)
+      filter: (_src, dest) => !/\/node_modules/.test(dest)
     });
     fs.copySync(paths.docs, path.resolve(gatsbyPath, 'src/pages'), {
       filter: src => /\.js$/.test(src)
