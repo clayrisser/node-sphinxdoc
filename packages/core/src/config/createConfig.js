@@ -6,7 +6,7 @@ import defaultConfig from './defaultConfig';
 
 const rootPath = pkgDir.sync(process.cwd());
 
-export default function createConfig({ action, options = {} }) {
+export default function createConfig({ action, options = {}, socket = false }) {
   options = sanitizeOptions(options);
   const platforms = new ModuleLoader('sphinxdocPlatform', {
     configPath: 'config',
@@ -16,7 +16,7 @@ export default function createConfig({ action, options = {} }) {
     defaultConfig,
     loaders: [platforms],
     optionsConfig: options.config || '{}',
-    socket: { silent: false }
+    socket: socket ? { silent: false } : false
   });
   const { config } = sphinxdoc;
   if (options.platform && !_.isBoolean(options.platform)) {

@@ -19,7 +19,7 @@ commander.option('-v --verbose', 'verbose logging');
 commander.action((cmd, options) => {
   try {
     isAction = true;
-    const config = createConfig({ options, action: cmd });
+    const config = createConfig({ options, action: cmd, socket: true });
     return action(config).catch(err => handleError(err, { kill: true }));
   } catch (err) {
     return handleError(err, { kill: true });
