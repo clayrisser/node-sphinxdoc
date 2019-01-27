@@ -32,6 +32,7 @@ export default class Rtd extends Platform {
     const { paths } = this;
     const buildPath = path.resolve(paths.working, 'build');
     const distPath = path.resolve(paths.project, 'dist/docs/gatsby');
+    const gatsbyPath = path.resolve(paths.working, '_gatsby');
     await this.loadEnvironment();
     await this.python([
       '-m',
@@ -42,12 +43,15 @@ export default class Rtd extends Platform {
       buildPath
     ]);
     fs.mkdirsSync(distPath);
-    fs.copySync(paths.docs, path.resolve(this.gatsbyTheme, 'src/pages'), {
+    fs.copySync(this.gatsbyTheme, gatsbyPath, {
+      filter: src => !/\/node_modules/.test(src)
+    });
+    fs.copySync(paths.docs, path.resolve(gatsbyPath, 'src/pages'), {
       filter: src => /\.js$/.test(src)
     });
     fs.copySync(
       path.resolve(buildPath, 'jekyll'),
-      path.resolve(this.gatsbyTheme, 'src/pages')
+      path.resolve(gatsbyPath, 'src/pages')
     );
     if (buildGatsby) await this.buildGatsby();
     return null;
@@ -56,9 +60,10 @@ export default class Rtd extends Platform {
   async buildGatsby() {
     const { paths } = this;
     const distPath = path.resolve(paths.project, 'dist/docs/gatsby');
+    const gatsbyPath = path.resolve(paths.working, 'gatsby');
     await this.gatsby(['build']);
     fs.mkdirsSync(distPath);
-    return fs.copySync(path.resolve(this.gatsbyTheme, 'public'), distPath);
+    return fs.copySync(path.resolve(gatsbyPath, 'public'), distPath);
   }
 
   async start() {
@@ -89,6 +94,8 @@ export default class Rtd extends Platform {
 
   async gatsby(command, args) {
     const { options } = this.config;
+    const { paths } = this;
+    const gatsbyPath = path.resolve(paths.working, 'gatsby');
     return new Promise((resolve, reject) => {
       const cp = crossSpawn(
         'node',
@@ -99,7 +106,7 @@ export default class Rtd extends Platform {
           ...args
         ],
         {
-          cwd: this.gatsbyTheme,
+          cwd: gatsbyPath,
           stdio: 'inherit'
         }
       );
