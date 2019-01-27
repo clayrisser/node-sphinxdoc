@@ -86,5 +86,6 @@
   "eslintIgnore": [
     ".cache",
     "public"
-  ]
+  ],
+  "gitHead": "43ca46b5fc7f579fe6977dbbdf19574b9beb220d"
 }
