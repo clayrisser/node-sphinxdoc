@@ -1,6 +1,6 @@
 {
   "name": "@sphinxdoc/gatsby",
-  "version": "0.1.22",
+  "version": "0.1.23",
   "description": "gatsby sphinxdoc platform",
   "keywords": [
     "sphinxdoc",
@@ -45,8 +45,8 @@
     "test": "npm run lint"
   },
   "dependencies": {
-    "@sphinxdoc/core": "^0.1.21",
-    "@sphinxdoc/gatsby-theme": "^0.1.21",
+    "@sphinxdoc/core": "^0.1.23",
+    "@sphinxdoc/gatsby-theme": "^0.1.23",
     "cross-spawn": "^6.0.5",
     "fs-extra": "^7.0.1",
     "gatsby-cli": "^2.4.6",
