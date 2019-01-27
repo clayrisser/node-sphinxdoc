@@ -74,6 +74,7 @@ export default class Platform {
   }
 
   async build() {
+    await this.clean(false);
     const { paths } = this;
     const buildPath = path.resolve(paths.working, 'build');
     const distPath = path.resolve(paths.project, 'dist/docs', this.output);
@@ -91,6 +92,7 @@ export default class Platform {
   }
 
   async start() {
+    await this.clean(false);
     const { paths } = this;
     await this.build();
     const server = this.serve
@@ -118,6 +120,15 @@ export default class Platform {
         log.info(`listening on port ${this.port}`);
         if (this.open) open(`http://localhost:${this.port}`);
       });
+    }
+  }
+
+  async clean(all = true) {
+    const { paths } = this;
+    fs.removeSync(paths.working);
+    if (all) {
+      const distPath = path.resolve(paths.project, 'dist/docs', this.output);
+      fs.removeSync(distPath);
     }
   }
 

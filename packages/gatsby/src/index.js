@@ -44,10 +44,12 @@ export default class Rtd extends Platform {
     ]);
     fs.mkdirsSync(distPath);
     fs.copySync(this.gatsbyTheme, gatsbyPath, {
-      filter: src => !/\/node_modules/.test(src)
+      filter: (_src, dest) => !/\/node_modules/.test(dest)
     });
     fs.symlinkSync(
-      path.resolve(rootPath, 'node_modules'),
+      fs.existsSync(path.resolve(__dirname, '../../../lerna.json'))
+        ? path.resolve(__dirname, '../../gatsby-theme/node_modules')
+        : path.resolve(rootPath, 'node_modules'),
       path.resolve(gatsbyPath, 'node_modules')
     );
     fs.copySync(paths.docs, path.resolve(gatsbyPath, 'src/pages'), {
