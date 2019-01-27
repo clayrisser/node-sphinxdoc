@@ -1,7 +1,7 @@
 {
   "name": "@sphinxdoc/gatsby-theme",
   "description": "Gatsby default starter",
-  "version": "0.1.27",
+  "version": "0.1.28",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "@babel/core": "^7.2.0",
