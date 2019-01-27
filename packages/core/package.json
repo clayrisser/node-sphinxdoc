@@ -44,7 +44,7 @@
     "test": "npm run lint"
   },
   "dependencies": {
-    "@ecosystem/config": "^0.3.2",
+    "@ecosystem/config": "^0.3.3",
     "@ecosystem/module-loader": "^0.3.2",
     "commander": "^2.19.0",
     "err": "^2.1.10",

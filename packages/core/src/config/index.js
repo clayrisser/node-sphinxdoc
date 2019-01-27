@@ -1,4 +1,4 @@
-import createConfig, { rebuildConfig as getConfig } from './createConfig';
+import createConfig, { getConfig } from './createConfig';
 
 export { createConfig, getConfig };
-export default { createConfig, getConfig };
+export default getConfig();

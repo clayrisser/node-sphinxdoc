@@ -1,11 +1,12 @@
 import Platform from './platform';
 import handleError from './handleError';
 import log from './log';
-import { getConfig } from './config';
+import config, { getConfig } from './config';
 
-export { Platform, getConfig, handleError, log };
+export { Platform, config, getConfig, handleError, log };
 export default {
   Platform,
+  config,
   getConfig,
   handleError,
   log

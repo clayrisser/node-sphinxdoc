@@ -13,6 +13,7 @@ export default function createConfig({ action, options = {}, socket = true }) {
     dependsOnPath: 'dependsOn'
   });
   const { config } = new ConfigLoader('sphinxdoc', {
+    cache: true,
     defaultConfig,
     loaders: [platforms],
     optionsConfig: options.config || '{}',
@@ -39,11 +40,13 @@ export default function createConfig({ action, options = {}, socket = true }) {
   };
 }
 
-export function rebuildConfig() {
-  const { config } = new ConfigLoader('sphinxdoc', {
+export function getConfig() {
+  const configLoader = new ConfigLoader('sphinxdoc', {
     defaultConfig,
     socket: true
   });
+  if (configLoader.mc.owner) return configLoader.mc.config;
+  const { config } = configLoader;
   return createConfig({ action: config.action, options: config.options });
 }
 

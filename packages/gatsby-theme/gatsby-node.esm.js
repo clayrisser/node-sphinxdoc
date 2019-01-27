@@ -1,8 +1,9 @@
 import path from 'path';
 import pkgDir from 'pkg-dir';
-import { getConfig } from '@sphinxdoc/core';
+import { config } from '@sphinxdoc/core';
 
-const config = getConfig();
+console.log('config', config);
+
 const rootPath = pkgDir.sync(process.cwd());
 
 export async function createPages({ actions, graphql }) {
