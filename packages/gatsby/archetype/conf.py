@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-from recommonmark.transform import AutoStructify
 from recommonmark.parser import CommonMarkParser
 
 author = 'Jam Risser'
@@ -12,9 +11,11 @@ exclude_patterns = [
 ]
 
 extensions = [
+    'recommonmark',
     'sphinx.ext.mathjax',
+    'sphinx_jekyll_builder',
     'sphinx_js',
-    'sphinx_jekyll_builder'
+    'sphinx_markdown_tables'
 ]
 
 html_static_path = ['_static']
@@ -62,9 +63,9 @@ pygments_style = 'sphinx'
 
 release = '0.0.1'
 
-source_parsers = {
-    '.md': CommonMarkParser
-}
+# source_parsers = {
+#     '.md': CommonMarkParser
+# }
 
 source_suffix = ['.rst', '.md']
 
@@ -95,4 +96,3 @@ def setup(app):
     }, True)
     app.add_stylesheet('styles/main.css')
     app.add_javascript('scripts/main.js')
-    app.add_transform(AutoStructify)
