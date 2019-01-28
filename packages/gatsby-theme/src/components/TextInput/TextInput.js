@@ -18,7 +18,7 @@ export default class TextInput extends Component {
 
   static defaultProps = {
     labelText: '',
-    type: '',
+    type: 'text',
     value: null,
     onChange: f => f
   };

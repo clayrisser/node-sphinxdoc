@@ -35,6 +35,17 @@ module.exports = {
         display: 'minimal-ui',
         icon: 'src/images/gatsby-icon.png'
       }
+    },
+    {
+      resolve: `@gatsby-contrib/gatsby-plugin-elasticlunr-search`,
+      options: {
+        fields: ['title'],
+        resolvers: {
+          MarkdownRemark: {
+            title: node => node.frontmatter.title
+          }
+        }
+      }
     }
   ]
 };

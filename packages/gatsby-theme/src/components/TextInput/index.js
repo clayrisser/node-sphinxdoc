@@ -1,27 +1,10 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import './index.scss';
+import React from 'react';
 import styled, { withTheme } from 'styled-components';
 import TextInput from './TextInput';
 
-class StyledTextInput extends Component {
-  static propTypes = {
-    style: PropTypes.object
-  };
-
-  static defaultProps = {
-    style: {}
-  };
-
-  get style() {
-    return {
-      ...this.props.style
-    };
-  }
-
-  render() {
-    const props = { ...this.props };
-    return <TextInput {...props} style={this.style} light />;
-  }
-}
-
-export default styled(withTheme(StyledTextInput))``;
+export default styled(
+  withTheme(props => {
+    return <TextInput {...props} />;
+  })
+)``;
