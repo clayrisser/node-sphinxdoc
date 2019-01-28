@@ -2,9 +2,12 @@ import ConfigLoader from '@ecosystem/config';
 import ModuleLoader from '@ecosystem/module-loader';
 import _ from 'lodash';
 import pkgDir from 'pkg-dir';
+import State from './state';
 import defaultConfig from './defaultConfig';
 
 const rootPath = pkgDir.sync(process.cwd());
+const state = new State();
+let configLoader = null;
 
 export default function createConfig({ action, options = {}, socket = true }) {
   options = sanitizeOptions(options);
@@ -12,13 +15,14 @@ export default function createConfig({ action, options = {}, socket = true }) {
     configPath: 'config',
     dependsOnPath: 'dependsOn'
   });
-  const { config } = new ConfigLoader('sphinxdoc', {
+  configLoader = new ConfigLoader('sphinxdoc', {
     cache: true,
     defaultConfig,
     loaders: [platforms],
     optionsConfig: options.config || '{}',
     socket: socket ? { silent: !options.debug && !options.verbose } : false
   });
+  const { config } = configLoader;
   if (options.platform && !_.isBoolean(options.platform)) {
     config.platformName = options.platform;
   }
@@ -31,23 +35,38 @@ export default function createConfig({ action, options = {}, socket = true }) {
   config.output = options.output || config.output;
   config.port = Number(options.port || config.port);
   config.serve = options.serve || config.serve;
-  return {
+  state.config = {
     ...config,
     action,
     options,
     platforms,
     rootPath
   };
+  return state.config;
 }
 
 export function getConfig() {
-  const configLoader = new ConfigLoader('sphinxdoc', {
-    defaultConfig,
-    socket: true
-  });
-  if (configLoader.mc.owner) return configLoader.mc.config;
-  const { config } = configLoader;
-  return createConfig({ action: config.action, options: config.options });
+  if (!configLoader) {
+    configLoader = new ConfigLoader('sphinxdoc', {
+      defaultConfig,
+      socket: true
+    });
+    configLoader.mc.onUpdate = handleUpdate;
+  }
+  handleUpdate(configLoader.config);
+  return state.config;
+}
+
+function handleUpdate(config) {
+  if (configLoader.mc.owner) {
+    state.config = config;
+  } else {
+    state.config = createConfig({
+      action: config.action,
+      options: config.options
+    });
+  }
+  return state.config;
 }
 
 function sanitizeOptions(options) {
