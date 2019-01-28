@@ -25,11 +25,11 @@ export default class Rtd extends Platform {
     );
   }
 
-  async build(buildGatsby = true) {
+  async build(buildGatsby = true, rebuild = false) {
     if (this.output !== 'gatsby' && this.output !== 'html') {
       return super.build();
     }
-    await this.clean(false);
+    if (!rebuild) await this.clean(false);
     const { paths } = this;
     const buildPath = path.resolve(paths.working, 'build');
     const distPath = path.resolve(paths.project, 'dist/docs/gatsby');
@@ -44,15 +44,17 @@ export default class Rtd extends Platform {
       buildPath
     ]);
     fs.mkdirsSync(distPath);
-    fs.copySync(this.gatsbyTheme, gatsbyPath, {
-      filter: (_src, dest) => !/\/node_modules/.test(dest)
-    });
-    fs.symlinkSync(
-      fs.existsSync(path.resolve(__dirname, '../../../lerna.json'))
-        ? path.resolve(__dirname, '../../gatsby-theme/node_modules')
-        : path.resolve(rootPath, 'node_modules'),
-      path.resolve(gatsbyPath, 'node_modules')
-    );
+    if (!rebuild) {
+      fs.copySync(this.gatsbyTheme, gatsbyPath, {
+        filter: (_src, dest) => !/\/node_modules/.test(dest)
+      });
+      fs.symlinkSync(
+        fs.existsSync(path.resolve(__dirname, '../../../lerna.json'))
+          ? path.resolve(__dirname, '../../gatsby-theme/node_modules')
+          : path.resolve(rootPath, 'node_modules'),
+        path.resolve(gatsbyPath, 'node_modules')
+      );
+    }
     fs.copySync(paths.docs, path.resolve(gatsbyPath, 'src/pages'), {
       filter: src => /\.js$/.test(src)
     });
@@ -75,6 +77,7 @@ export default class Rtd extends Platform {
 
   async start() {
     const { paths } = this;
+    await this.clean(false);
     await this.build(false);
     const monitor = await new Promise(resolve => {
       return createMonitor(
@@ -87,7 +90,7 @@ export default class Rtd extends Platform {
       );
     });
     monitor.on('changed', async () => {
-      await this.build(false);
+      await this.build(false, true);
     });
     if (this.serve) {
       return this.gatsby('develop', [

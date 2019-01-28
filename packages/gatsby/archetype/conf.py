@@ -18,7 +18,8 @@ name = config.name if 'name' in config else ''
 description = config.description if 'description' in config else ''
 
 exclude_patterns = [
-    'build/*'
+    'build/*',
+    '_*'
 ]
 
 extensions = [
