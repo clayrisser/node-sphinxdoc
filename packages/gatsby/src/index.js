@@ -29,6 +29,7 @@ export default class Rtd extends Platform {
     if (this.output !== 'gatsby' && this.output !== 'html') {
       return super.build();
     }
+    await this.clean(false);
     const { paths } = this;
     const buildPath = path.resolve(paths.working, 'build');
     const distPath = path.resolve(paths.project, 'dist/docs/gatsby');

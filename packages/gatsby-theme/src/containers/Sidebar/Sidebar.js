@@ -130,8 +130,12 @@ class Sidebar extends Component {
         >
           {this.renderSubHeaders(
             page.frontmatter.path,
-            _.find(headers, header => header.label === page.frontmatter.title)
-              .children
+            (
+              _.find(
+                headers,
+                header => header.label === page.frontmatter.title
+              ) || headers?.[0]
+            )?.children || []
           )}
         </SideNavMenu>
       );

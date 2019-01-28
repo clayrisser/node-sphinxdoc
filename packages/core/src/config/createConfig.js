@@ -61,7 +61,7 @@ function handleUpdate(config) {
   if (configLoader.mc.owner) {
     state.config = config;
   } else {
-    state.config = createConfig({
+    createConfig({
       action: config.action,
       options: config.options
     });

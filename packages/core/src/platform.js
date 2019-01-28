@@ -143,5 +143,6 @@ export default class Platform {
       }
     }
     if (fs.existsSync(paths.docs)) fs.copySync(paths.docs, paths.working);
+    fs.writeJsonSync(path.resolve(paths.working, 'config.json'), this.config);
   }
 }

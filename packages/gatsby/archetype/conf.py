@@ -1,10 +1,21 @@
 #!/usr/bin/env python3
 
+from munch import munchify
+from pydash import _
 from recommonmark.parser import CommonMarkParser
+import datetime, json, os
 
-author = 'Jam Risser'
+config = {}
+with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.json')) as f:
+    config = munchify(json.load(f))
 
-copyright = '2018, Jam Risser'
+author = config.author if 'author' in config else ''
+
+copyright = str(datetime.datetime.now().year) + ', ' + author
+
+name = config.name if 'name' in config else ''
+
+description = config.description if 'description' in config else ''
 
 exclude_patterns = [
     'build/*'
@@ -24,7 +35,7 @@ html_theme = 'sphinx_rtd_theme'
 
 htmlhelp_basename = 'sphinxdoc_coredoc'
 
-js_source_path = 'src'
+js_source_path = config.src if 'src' in config else 'src'
 
 language = None
 
@@ -32,9 +43,9 @@ master_doc = 'index'
 
 latex_documents = [(
     master_doc,
-    'sphinxdoc_core.tex',
-    'Sphinxdoc Core Documentation',
-    'Jam Risser',
+    _.snake_case(name).replace('-', '_') + '.tex',
+    name,
+    author,
     'manual'
 )]
 
@@ -47,8 +58,8 @@ latex_elements = {
 
 man_pages = [(
     master_doc,
-    'sphinxdoc_core',
-    'Sphinxdoc Core Documentation',
+    _.snake_case(name).replace('-', '_'),
+    name,
     [author],
     1
 )]
@@ -57,7 +68,7 @@ needs_sphinx = '1.0'
 
 primary_domain = 'js'
 
-project = '@sphinxdoc/core'
+project = _.snake_case(name).replace('-', '_')
 
 pygments_style = 'sphinx'
 
@@ -73,11 +84,11 @@ templates_path = ['_templates']
 
 texinfo_documents = [(
     master_doc,
-    '@sphinxdoc/core',
-    'Sphinxdoc Core Documentation',
+    _.snake_case(name).replace('-', '_'),
+    name,
     author,
-    'sphinxdoc_core',
-    'document node project with sphinx',
+    _.snake_case(name).replace('-', '_'),
+    description,
     'Miscellaneous'
 )]
 
