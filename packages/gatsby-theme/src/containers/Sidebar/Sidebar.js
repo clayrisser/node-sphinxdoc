@@ -1,11 +1,14 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import _ from 'lodash';
+import autobind from 'autobind-decorator';
 import cheerio from 'cheerio';
+import queryString from 'query-string';
 import { List24 } from '@carbon/icons-react';
-import { Location } from '@reach/router';
+import { Location, navigate } from '@reach/router';
 import { StaticQuery, graphql } from 'gatsby';
 import Link from '~/components/Link';
+import TextInput from '~/components/TextInput';
 import View from '~/components/View';
 import {
   SideNav,
@@ -16,11 +19,19 @@ import {
 } from '~/components/UIShell';
 import key from '~/reactUniqueKey';
 
+@autobind
 class Sidebar extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      query: this.query
+    };
+  }
 
   get pages() {
     return (this._pages =
@@ -39,6 +50,10 @@ class Sidebar extends Component {
   get title() {
     return (this._title =
       this._title || this.props.data?.site?.siteMetadata?.title || '');
+  }
+
+  get query() {
+    return queryString.parse(this.props.location.search)?.q || '';
   }
 
   getHeaderTree(html) {
@@ -97,6 +112,18 @@ class Sidebar extends Component {
     return getHeaders(headerTree);
   }
 
+  handleSearchRef(ref) {
+    if (this.query.length) {
+      const input = ref?.getElementsByTagName('input')?.[0];
+      if (input?.focus) input.focus();
+    }
+  }
+
+  handleSearch(query) {
+    this.setState({ query });
+    navigate(`/search?q=${query}`);
+  }
+
   renderSubHeaders(rootPath, subHeaders) {
     return _.map(subHeaders, (subHeader, i) => {
       return (
@@ -147,7 +174,15 @@ class Sidebar extends Component {
       <SideNav>
         <View>
           <SideNavHeader>
-            <SideNavDetails title={this.title} />
+            <SideNavDetails title={this.title}>
+              <View ref={this.handleSearchRef}>
+                <TextInput
+                  value={this.state.query}
+                  label="Search"
+                  onChange={this.handleSearch}
+                />
+              </View>
+            </SideNavDetails>
           </SideNavHeader>
           {this.renderHeaders()}
         </View>
