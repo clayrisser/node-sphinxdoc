@@ -8,14 +8,15 @@ import { List24 } from '@carbon/icons-react';
 import { Location, navigate } from '@reach/router';
 import { StaticQuery, graphql } from 'gatsby';
 import Link from '~/components/Link';
-import TextInput from '~/components/TextInput';
+import Search from '~/components/Search';
 import View from '~/components/View';
 import {
   SideNav,
   SideNavDetails,
+  SideNavHeader,
+  SideNavItems,
   SideNavMenu,
-  SideNavMenuItem,
-  SideNavHeader
+  SideNavMenuItem
 } from '~/components/UIShell';
 import key from '~/reactUniqueKey';
 
@@ -174,16 +175,17 @@ class Sidebar extends Component {
       <SideNav>
         <View>
           <SideNavHeader>
-            <SideNavDetails title={this.title}>
-              <View ref={this.handleSearchRef}>
-                <TextInput
-                  value={this.state.query}
-                  label="Search"
-                  onChange={this.handleSearch}
-                />
-              </View>
-            </SideNavDetails>
+            <SideNavDetails title={this.title} />
           </SideNavHeader>
+          <SideNavItems>
+            <View ref={this.handleSearchRef}>
+              <Search
+                value={this.state.query}
+                label="Search"
+                onChange={this.handleSearch}
+              />
+            </View>
+          </SideNavItems>
           {this.renderHeaders()}
         </View>
       </SideNav>
