@@ -76,9 +76,22 @@ export default class Rtd extends Platform {
   }
 
   async start() {
-    const { paths } = this;
     await this.clean(false);
     await this.build(false);
+    await this.monitorProject();
+    await this.monitorGatsbyTheme();
+    if (this.serve) {
+      return this.gatsby('develop', [
+        '-p',
+        this.port,
+        ...(this.open ? ['-o'] : [])
+      ]);
+    }
+    return this.buildGatsby();
+  }
+
+  async monitorProject() {
+    const { paths } = this;
     const monitor = await new Promise(resolve => {
       return createMonitor(
         paths.project,
@@ -92,14 +105,30 @@ export default class Rtd extends Platform {
     monitor.on('changed', async () => {
       await this.build(false, true);
     });
-    if (this.serve) {
-      return this.gatsby('develop', [
-        '-p',
-        this.port,
-        ...(this.open ? ['-o'] : [])
-      ]);
-    }
-    return this.buildGatsby();
+  }
+
+  async monitorGatsbyTheme() {
+    const { paths } = this;
+    const gatsbyPath = path.resolve(paths.working, '_gatsby');
+    const monitor = await new Promise(resolve => {
+      return createMonitor(
+        this.gatsbyTheme,
+        {
+          ignoreDirectoryPattern: /node_modules/,
+          ignoreDotFiles: true
+        },
+        resolve
+      );
+    });
+    monitor.on('changed', async changedPath => {
+      fs.copySync(
+        changedPath,
+        path.resolve(
+          gatsbyPath,
+          changedPath.substr(this.gatsbyTheme.length + 1)
+        )
+      );
+    });
   }
 
   async gatsby(command, args) {
