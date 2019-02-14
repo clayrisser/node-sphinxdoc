@@ -2,7 +2,7 @@
 
 from munch import munchify
 from pydash import _
-from recommonmark.parser import CommonMarkParser
+from sphinx_markdown_parser.parser import MarkdownParser
 import datetime, json, os
 
 config = {}
@@ -23,11 +23,10 @@ exclude_patterns = [
 ]
 
 extensions = [
-    'recommonmark',
+    'sphinx_markdown_parser',
     'sphinx.ext.mathjax',
     'sphinx_jekyll_builder',
-    'sphinx_js',
-    'sphinx_markdown_tables'
+    'sphinx_js'
 ]
 
 html_static_path = ['_static']
@@ -75,9 +74,9 @@ pygments_style = 'sphinx'
 
 release = '0.0.1'
 
-# source_parsers = {
-#     '.md': CommonMarkParser
-# }
+source_parsers = {
+    '.md': MarkdownParser
+}
 
 source_suffix = ['.rst', '.md']
 
