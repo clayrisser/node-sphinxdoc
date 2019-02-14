@@ -9,3 +9,8 @@ I am a document
 ```js
 var hi = 'world';
 ```
+
+| One | Two |
+| --- | --- |
+| 1   | 2   |
+| I   | II  |
