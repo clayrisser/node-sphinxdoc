@@ -4,7 +4,9 @@ import pkgDir from 'pkg-dir';
 import { environment } from 'js-info';
 import { oc } from 'ts-optchain.macro';
 import defaultConfig from './defaultConfig';
-import { Config, Option, Options } from '../types';
+import { Config, Option, Options, Logger } from '../types';
+
+const logger: Logger = console;
 
 export default function createConfig(
   action: string,
@@ -22,6 +24,7 @@ export default function createConfig(
     ...config,
     action,
     env: environment.value,
+    logger,
     options
   };
   return config;

@@ -17,7 +17,11 @@
     "email": "jam@codejam.ninja",
     "url": "https://codejam.ninja"
   },
+  "bin": {
+    "sphinxdoc": "bin/bin.js"
+  },
   "files": [
+    "bin",
     "lib"
   ],
   "main": "lib/index.js",
@@ -30,14 +34,14 @@
     "clean": "git clean -fXd -e \\!node_modules -e \\!node_modules/**/* && jest --clearCache",
     "clean:purge": "jest --clearCache && git clean -fXd",
     "format": "prettier --write ./**/*.{json,md,scss,yaml,yml,js,jsx,ts,tsx} --ignore-path .gitignore",
-    "link": "yarn link && cd example && yarn link sphinxdoc",
     "lint": "npm run format && tsc --allowJs --noEmit && eslint --ext .ts,.tsx ./",
     "lint:fix": "npm run format && tsc --noEmit && eslint --ext .ts,.tsx --fix ./",
     "prepublish": "npm run build",
-    "start": "babel-node src --extensions \".ts,.tsx\"",
+    "start": "babel-node src/bin --extensions \".ts,.tsx\"",
     "test": "npm run lint && jest"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.4.4",
     "commander": "^2.20.0",
     "core-js": "^3.1.4",
     "cosmiconfig": "^5.2.1",
@@ -45,6 +49,7 @@
     "js-info": "^0.3.0",
     "merge-configuration": "^0.4.1",
     "pkg-dir": "^4.2.0",
+    "python-env": "^0.2.8",
     "ts-optchain.macro": "^1.1.5"
   },
   "devDependencies": {
@@ -52,6 +57,7 @@
     "@babel/core": "^7.4.5",
     "@babel/node": "^7.4.5",
     "@babel/preset-typescript": "^7.3.3",
+    "@types/commander": "^2.12.2",
     "@types/cosmiconfig": "^5.0.3",
     "@types/jest": "^24.0.15",
     "@typescript-eslint/eslint-plugin": "^1.11.0",

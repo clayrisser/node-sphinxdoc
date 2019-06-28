@@ -1,4 +1,5 @@
-// import Err from 'err';
 import { Config } from '../types';
 
-export async function start(_config: Config) {}
+export async function start({ logger }: Config) {
+  logger.info('starting');
+}
