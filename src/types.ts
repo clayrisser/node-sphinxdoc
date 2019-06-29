@@ -8,9 +8,16 @@ export interface Envs {
 
 export interface Config {
   action: string;
+  docsPath: string;
   env: string;
   logger: Logger;
+  open: boolean;
   options: Options;
+  output: string;
+  outputPath: string;
+  port: number;
+  readme: boolean;
+  serve: boolean;
 }
 
 export interface Logger {
@@ -25,3 +32,7 @@ export interface Options {
 }
 
 export type Option = string | boolean | number;
+
+export interface Paths {
+  [key: string]: string;
+}

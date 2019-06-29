@@ -37,20 +37,25 @@
     "lint": "npm run format && tsc --allowJs --noEmit && eslint --ext .ts,.tsx ./",
     "lint:fix": "npm run format && tsc --noEmit && eslint --ext .ts,.tsx --fix ./",
     "prepublish": "npm run build",
-    "start": "babel-node src/bin --extensions \".ts,.tsx\"",
+    "start": "babel-node --extensions '.ts,.tsx' src/bin",
     "test": "npm run lint && jest"
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
+    "@types/fs-extra": "^8.0.0",
     "commander": "^2.20.0",
     "core-js": "^3.1.4",
     "cosmiconfig": "^5.2.1",
     "err": "^2.1.11",
+    "fs-extra": "^8.1.0",
+    "http-server": "^0.11.1",
     "js-info": "^0.3.0",
     "merge-configuration": "^0.4.1",
+    "open": "^6.3.0",
     "pkg-dir": "^4.2.0",
     "python-env": "^0.2.8",
-    "ts-optchain.macro": "^1.1.5"
+    "ts-optchain.macro": "^1.1.5",
+    "watch": "^1.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
@@ -59,7 +64,9 @@
     "@babel/preset-typescript": "^7.3.3",
     "@types/commander": "^2.12.2",
     "@types/cosmiconfig": "^5.0.3",
+    "@types/http-server": "^0.10.0",
     "@types/jest": "^24.0.15",
+    "@types/watch": "^1.0.1",
     "@typescript-eslint/eslint-plugin": "^1.11.0",
     "@typescript-eslint/parser": "^1.11.0",
     "babel-preset-jam": "^0.4.1",
