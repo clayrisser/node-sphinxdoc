@@ -1,21 +1,35 @@
-from sphinx_markdown_parser.parser import MarkdownParser
+from recommonmark.transform import AutoStructify
 
 author = 'Jam Risser'
 copyright = '2019, Jam Risser'
-exclude_patterns = ['build/*']
 html_static_path = ['_static']
 html_theme = 'sphinx_rtd_theme'
+js_language = 'typescript'
+js_source_path = 'src'
 master_doc = 'index'
+primary_domain = 'js'
 project = 'sphinxdoc'
 release = '0.0.1'
+root_for_relative_js_paths = '.'
 templates_path = ['_templates']
+exclude_patterns = [
+    'dist/*',
+    'lib/*'
+]
+extensions = [
+    'sphinx_js',
+    'recommonmark'
+]
 source_suffix = {
     '.rst': 'restructuredtext',
     '.md': 'markdown'
 }
-extensions = [
-  'sphinx_markdown_parser'
-]
 
 def setup(app):
-    app.add_source_parser(MarkdownParser)
+    app.add_config_value('recommonmark_config', {
+      'enable_auto_toc_tree': True,
+      'enable_eval_rst': True,
+      'enable_inline_math': True,
+      'enable_math': True
+    }, True)
+    app.add_transform(AutoStructify)
