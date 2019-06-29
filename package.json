@@ -21,6 +21,7 @@
     "sphinxdoc": "bin/bin.js"
   },
   "files": [
+    "archetype",
     "bin",
     "lib"
   ],

@@ -1,5 +1,7 @@
+import Sphinxdoc from '../sphinxdoc';
 import { Config } from '../types';
 
-export async function clean({ logger }: Config) {
-  logger.info('cleaning');
+export async function clean(config: Config) {
+  const sphinxdoc = new Sphinxdoc(config);
+  await sphinxdoc.clean();
 }

@@ -22,6 +22,7 @@
 /.idea
 /.tmp
 /.vscode
+/dist
 /lib
 \#*\#
 bower_components

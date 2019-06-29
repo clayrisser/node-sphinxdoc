@@ -13,6 +13,8 @@ commander.command('start');
 commander.option('--config [json]', 'config json');
 commander.option('--output [name]', 'output name');
 commander.option('-d --debug', 'debug logging');
+commander.option('-o --open', 'open browser');
+commander.option('-s --serve', 'run server');
 commander.option('-v --verbose', 'verbose logging');
 commander.action(async (cmd: string, options: Options) => {
   try {

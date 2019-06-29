@@ -1,8 +1,5 @@
-import cosmiconfig from 'cosmiconfig';
 import mergeConfiguration from 'merge-configuration';
-import pkgDir from 'pkg-dir';
 import { environment } from 'js-info';
-import { oc } from 'ts-optchain.macro';
 import defaultConfig from './defaultConfig';
 import { Config, Option, Options, Logger } from '../types';
 
@@ -13,13 +10,9 @@ export default function createConfig(
   options: Options = {},
   customConfig: Partial<Config> = {}
 ): Config {
-  const rootPath = pkgDir.sync(process.cwd()) || process.cwd();
   options = sanitizeOptions(options);
-  const userConfig: Partial<Config> = oc(
-    cosmiconfig('sphinxdoc').searchSync(rootPath)
-  ).config({});
-  let config = mergeConfiguration<Config>(defaultConfig, userConfig);
-  config = mergeConfiguration(config, customConfig);
+  let config = mergeConfiguration(defaultConfig, customConfig);
+  if (options.output) config.output = options.output as string;
   config = {
     ...config,
     action,

@@ -111,7 +111,7 @@ export default class Sphinxdoc {
       buildPath
     ]);
     await fs.mkdirs(this.paths.dist);
-    fs.copySync(path.resolve(buildPath, this.paths.output), this.paths.dist);
+    fs.copySync(path.resolve(buildPath, this.config.output), this.paths.dist);
   }
 
   async start() {
@@ -136,7 +136,8 @@ export default class Sphinxdoc {
       const server = createServer({
         root: path.resolve(buildPath, this.config.output)
       });
-      server.on('error', handleError);
+      // @ts-ignore
+      server.server.on('error', handleError);
       // @ts-ignore
       server.listen(this.config.port, (err: Error) => {
         if (err) throw err;
