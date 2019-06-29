@@ -1,17 +1,20 @@
 import Err from 'err';
 import handleError from './handleError';
-import { Config } from './types';
+import { Config, Dependancies } from './types';
 import { build, clean, start } from './actions';
 
-export default async function action(config: Config) {
+export default async function action(
+  config: Config,
+  dependancies: Dependancies
+) {
   const { action } = config;
   switch (action) {
     case 'build':
-      return build(config);
+      return build(config, dependancies);
     case 'clean':
-      return clean(config);
+      return clean(config, dependancies);
     case 'start':
-      return start(config);
+      return start(config, dependancies);
   }
-  return handleError(new Err(`action '${action}' not found`));
+  return handleError(new Err(`action '${action}' not found`), dependancies);
 }

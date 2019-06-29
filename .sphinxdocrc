@@ -1,9 +1,21 @@
+from sphinx_markdown_parser.parser import MarkdownParser
+
 author = 'Jam Risser'
 copyright = '2019, Jam Risser'
-exclude_patterns = []
-extensions = []
+exclude_patterns = ['build/*']
 html_static_path = ['_static']
 html_theme = 'sphinx_rtd_theme'
+master_doc = 'index'
 project = 'sphinxdoc'
 release = '0.0.1'
 templates_path = ['_templates']
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.md': 'markdown'
+}
+extensions = [
+  'sphinx_markdown_parser'
+]
+
+def setup(app):
+    app.add_source_parser(MarkdownParser)

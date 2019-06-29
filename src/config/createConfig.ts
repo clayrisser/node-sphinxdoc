@@ -1,9 +1,7 @@
 import mergeConfiguration from 'merge-configuration';
 import { environment } from 'js-info';
 import defaultConfig from './defaultConfig';
-import { Config, Option, Options, Logger } from '../types';
-
-const logger: Logger = console;
+import { Config, Option, Options } from '../types';
 
 export default function createConfig(
   action: string,
@@ -12,20 +10,24 @@ export default function createConfig(
 ): Config {
   options = sanitizeOptions(options);
   let config = mergeConfiguration(defaultConfig, customConfig);
-  if (options.output) config.output = options.output as string;
   config = {
     ...config,
     action,
+    docsPath: options.docsPath || config.docsPath,
     env: environment.value,
-    logger,
-    options
+    open: options.open || config.open,
+    options,
+    output: options.output || config.output,
+    outputPath: options.outputPath || config.outputPath,
+    port: Number(options.port || config.port),
+    serve: options.serve || config.serve
   };
   return config;
 }
 
 function sanitizeOptions(options: Options): Options {
   return Object.entries(options).reduce(
-    (options: Options, [key, option]: [string, Option]) => {
+    (options: { [key: string]: Option }, [key, option]: [string, Option]) => {
       if (
         key.length &&
         key[0] !== '_' &&

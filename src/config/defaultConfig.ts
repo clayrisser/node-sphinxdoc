@@ -1,11 +1,12 @@
 import { Config } from '../types';
 
 export default {
+  action: 'start',
   docsPath: 'docs',
-  open: true,
+  open: false,
   output: 'html',
   outputPath: 'dist/docs',
   port: 6001,
   readme: true,
-  serve: true
+  serve: false
 } as Config;

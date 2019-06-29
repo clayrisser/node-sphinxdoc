@@ -1,15 +1,17 @@
 import Err from 'err';
 import { oc } from 'ts-optchain.macro';
+import { Dependancies } from './types';
 
-const logger = console;
-
-export default function handleError(error: Err | Error) {
+export default function handleError(
+  error: Err | Error,
+  { spinner }: Dependancies
+) {
   const err: Err = sanitizeErr(error);
   const statusCode = err.code.toString();
   if (statusCode.length && statusCode[0] === '4') {
-    return logger.warn(err.message);
+    return spinner.warn(err.message);
   }
-  return logger.error(err.stack);
+  return spinner.fail(err.stack);
 }
 
 function sanitizeErr(err: Partial<Err>): Err {

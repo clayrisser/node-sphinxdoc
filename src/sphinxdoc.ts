@@ -46,6 +46,13 @@ export default class Sphinxdoc {
       if (fs.existsSync(readmePath)) {
         await fs.copy(readmePath, path.resolve(this.paths.working, 'index.md'));
       }
+      const readmeRstPath = path.resolve(this.paths.project, 'README.rst');
+      if (fs.existsSync(readmeRstPath)) {
+        await fs.copy(
+          readmeRstPath,
+          path.resolve(this.paths.working, 'index.rst')
+        );
+      }
     }
     if (fs.existsSync(this.paths.docs)) {
       await fs.copy(this.paths.docs, this.paths.working);
@@ -114,8 +121,7 @@ export default class Sphinxdoc {
     fs.copySync(path.resolve(buildPath, this.config.output), this.paths.dist);
   }
 
-  async start() {
-    const { logger } = this.config;
+  async start(info: (message: string) => any) {
     await this.clean(false);
     await this.build();
     const buildPath = path.resolve(this.paths.working, 'build');
@@ -141,7 +147,7 @@ export default class Sphinxdoc {
       // @ts-ignore
       server.listen(this.config.port, (err: Error) => {
         if (err) throw err;
-        logger.info(`listening on port ${this.config.port}`);
+        info(`listening on port ${this.config.port}`);
         if (this.config.open) open(`http://localhost:${this.config.port}`);
       });
     }
