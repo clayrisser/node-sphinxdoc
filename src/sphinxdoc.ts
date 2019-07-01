@@ -130,6 +130,11 @@ export default class Sphinxdoc {
         this.paths.project,
         {
           ignoreDirectoryPattern: /node_modules/,
+          filter: (path: string, _stat: fs.Stats) => {
+            if (new RegExp(this.paths.output).test(path)) return false;
+            if (new RegExp(this.paths.working).test(path)) return false;
+            return true;
+          },
           ignoreDotFiles: true
         },
         resolve
