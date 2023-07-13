@@ -4,6 +4,8 @@
 
 > sphinx documentation generator for node
 
+![](assets/node-sphinxdoc.png)
+
 Please ★ this repo if you found it useful ★ ★ ★
 
 ## Features
